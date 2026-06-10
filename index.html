@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="VMC Advertising Agency — Philippines' digital marketing agency specializing in SEO, web development, branding, and lead generation."/>
+<title>VMC Advertising Agency | Digital Marketing Philippines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --c1:#FF4D00;--c2:#FFB800;--c3:#00C2A8;--c4:#0F0F1A;--c5:#F6F3EF;
+  --white:#ffffff;--text:#0F0F1A;--muted:#6B6B80;--border:#E2E0DB;
+  --r:12px;--rl:20px;
+  --fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);color:var(--text);background:var(--white);overflow-x:hidden}
+
+/* ═══ PAGE SWITCHING — THE FIX ═══
+   All pages hidden by default. Only .active shows.
+   We use visibility + height trick so layout never leaks.
+*/
+.page{
+  display:none;
+  flex-direction:column;
+  min-height:100vh;
+}
+.page.active{
+  display:flex;
+  flex-direction:column;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  background:rgba(15,15,26,0.92);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.07);padding:0 6%;
+  transition:background .3s;
+}
+nav.light{background:rgba(255,255,255,0.96);border-bottom:1px solid var(--border);}
+nav.light .logo{color:var(--text);}
+nav.light .logo span{color:var(--c1);}
+nav.light .nav-links a{color:var(--text);}
+nav.light .nav-toggle span{background:var(--text);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:1240px;margin:0 auto}
+.logo{font-family:var(--fh);font-weight:800;font-size:1.55rem;color:var(--white);text-decoration:none;letter-spacing:-1px}
+.logo span{color:var(--c1)}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
+.nav-links a{text-decoration:none;color:rgba(255,255,255,.75);font-size:.88rem;font-weight:500;transition:color .2s;cursor:pointer}
+.nav-links a:hover{color:var(--c1)}
+.nav-links .ncta{background:var(--c1);color:var(--white)!important;padding:.5rem 1.3rem;border-radius:50px;font-weight:600;transition:background .2s,transform .15s}
+.nav-links .ncta:hover{background:#e04000;transform:translateY(-1px)}
+.nav-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.nav-toggle span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:.3s}
+.mob{display:none;flex-direction:column;gap:0;background:var(--c4);border-top:1px solid rgba(255,255,255,.07)}
+.mob.open{display:flex}
+.mob a{padding:1rem 6%;color:rgba(255,255,255,.8);text-decoration:none;font-size:.95rem;font-weight:500;border-bottom:1px solid rgba(255,255,255,.05);cursor:pointer}
+.mob a:hover{color:var(--c1)}
+
+/* ── SHARED ── */
+.wrap{max-width:1240px;margin:0 auto;width:100%;padding:0 6%}
+.eyebrow{font-size:.73rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--c1);margin-bottom:.75rem;display:block}
+.stitle{font-family:var(--fh);font-size:clamp(2rem,4vw,2.9rem);font-weight:800;letter-spacing:-1.5px;line-height:1.08;margin-bottom:1rem}
+.ssub{color:var(--muted);max-width:540px;line-height:1.75;font-size:.97rem}
+.btn-o{background:var(--c1);color:var(--white);padding:.85rem 2rem;border-radius:50px;text-decoration:none;font-weight:700;font-size:.92rem;border:none;cursor:pointer;display:inline-block;transition:all .2s}
+.btn-o:hover{background:#e04000;transform:translateY(-2px)}
+.btn-g{background:transparent;color:var(--white);padding:.85rem 2rem;border-radius:50px;text-decoration:none;font-weight:600;font-size:.92rem;border:1.5px solid rgba(255,255,255,.3);display:inline-block;transition:all .2s;cursor:pointer}
+.btn-g:hover{border-color:rgba(255,255,255,.7)}
+.btn-w{background:var(--white);color:var(--c1);padding:.85rem 2rem;border-radius:50px;text-decoration:none;font-weight:700;font-size:.92rem;border:none;cursor:pointer;display:inline-block;transition:all .2s}
+.btn-w:hover{background:#fff0eb;transform:translateY(-2px)}
+.btn-dk{background:var(--c1);color:var(--white);padding:.85rem 2rem;border-radius:50px;text-decoration:none;font-weight:700;font-size:.92rem;border:none;cursor:pointer;display:inline-block;transition:all .2s}
+.btn-dk:hover{background:#e04000;transform:translateY(-2px)}
+section{padding:90px 0}
+
+/* ─────────────────────────────
+   HOME PAGE
+───────────────────────────── */
+/* HERO */
+.hero{
+  background:var(--c4);
+  padding:160px 0 100px;
+  position:relative;overflow:hidden;
+  flex-shrink:0;
+}
+.hero-glow1{position:absolute;top:-100px;right:-80px;width:650px;height:650px;border-radius:50%;background:radial-gradient(circle,rgba(255,77,0,.22) 0%,transparent 68%);pointer-events:none}
+.hero-glow2{position:absolute;bottom:-120px;left:-60px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,194,168,.14) 0%,transparent 68%);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,77,0,.12);border:1px solid rgba(255,77,0,.28);color:#FF7A3D;padding:.38rem 1rem;border-radius:50px;font-size:.75rem;font-weight:700;letter-spacing:.07em;margin-bottom:1.5rem;text-transform:uppercase}
+.hero-title{font-family:var(--fh);font-size:clamp(3rem,5.5vw,4.8rem);font-weight:800;color:var(--white);line-height:1.02;letter-spacing:-2.5px;margin-bottom:1.5rem}
+.hero-title .hl{color:var(--c1);display:block}
+.hero-sub{color:rgba(255,255,255,.58);font-size:1rem;max-width:500px;line-height:1.75;margin-bottom:2.5rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem;padding-top:2.5rem;border-top:1px solid rgba(255,255,255,.08)}
+.stat-n{font-family:var(--fh);font-size:2.4rem;font-weight:800;color:var(--c1);display:block;line-height:1}
+.stat-l{font-size:.78rem;color:rgba(255,255,255,.45);margin-top:.3rem;display:block}
+.hero-right{position:relative}
+.hero-card-stack{display:flex;flex-direction:column;gap:1rem}
+.hcard{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:1.2rem 1.4rem;display:flex;align-items:center;gap:1rem;transition:transform .3s}
+.hcard:hover{transform:translateX(-6px)}
+.hcard-icon{width:42px;height:42px;border-radius:10px;background:rgba(255,77,0,.18);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.hcard-text strong{display:block;color:var(--white);font-size:.9rem;font-weight:600;margin-bottom:.15rem}
+.hcard-text span{color:rgba(255,255,255,.45);font-size:.78rem}
+.hcard-pill{margin-left:auto;background:rgba(0,194,168,.15);color:#00C2A8;font-size:.7rem;font-weight:700;padding:.25rem .6rem;border-radius:50px;flex-shrink:0}
+
+/* TRUSTED STRIP */
+.trust{background:var(--c4);border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
+.trust-inner{display:flex;align-items:center;gap:2.5rem;flex-wrap:wrap}
+.trust-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);white-space:nowrap}
+.trust-pills{display:flex;gap:.75rem;flex-wrap:wrap}
+.tpill{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);color:rgba(255,255,255,.5);padding:.35rem .9rem;border-radius:50px;font-size:.78rem;font-weight:500}
+
+/* APPROACH */
+.approach{background:var(--white);flex-shrink:0}
+.approach-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3.5rem}
+.astep{padding:2rem;border-radius:var(--rl);background:var(--c5);border:1px solid var(--border);position:relative;overflow:hidden}
+.astep-num{font-family:var(--fh);font-size:4rem;font-weight:800;color:rgba(255,77,0,.1);position:absolute;top:.8rem;right:1rem;line-height:1}
+.astep h3{font-family:var(--fh);font-size:1rem;font-weight:700;margin:2.8rem 0 .6rem;position:relative}
+.astep p{color:var(--muted);font-size:.86rem;line-height:1.65;position:relative}
+
+/* SERVICES PREVIEW */
+.sprv{background:var(--c5);flex-shrink:0}
+.svc-row{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;margin-bottom:3rem}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.scard{background:var(--white);border-radius:var(--rl);padding:2rem;border:1px solid var(--border);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.scard::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c1),var(--c2))}
+.scard:hover{transform:translateY(-5px);box-shadow:0 24px 48px rgba(0,0,0,.08)}
+.scard-icon{width:46px;height:46px;border-radius:11px;background:rgba(255,77,0,.08);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.1rem}
+.scard h3{font-family:var(--fh);font-size:1.05rem;font-weight:700;margin-bottom:.5rem}
+.scard p{color:var(--muted);font-size:.875rem;line-height:1.6}
+.scard-tag{display:inline-block;margin-top:.9rem;font-size:.73rem;font-weight:700;color:var(--c1);letter-spacing:.04em}
+
+/* CTA STRIP */
+.cstrip{background:var(--c1);padding:80px 0;text-align:center;flex-shrink:0}
+.cstrip h2{font-family:var(--fh);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;color:var(--white);letter-spacing:-1.5px;margin-bottom:.8rem}
+.cstrip p{color:rgba(255,255,255,.8);margin-bottom:2rem;font-size:.97rem}
+
+/* ─────────────────────────────
+   SERVICES PAGE
+───────────────────────────── */
+.pg-hero{background:var(--c4);padding:140px 0 90px;position:relative;overflow:hidden;flex-shrink:0}
+.pg-hero-glow{position:absolute;top:-80px;right:-80px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(255,77,0,.2),transparent 68%);pointer-events:none}
+.pg-title{font-family:var(--fh);font-size:clamp(2.5rem,5vw,4rem);font-weight:800;color:var(--white);line-height:1.05;letter-spacing:-2px;margin-bottom:1rem}
+.pg-title span{color:var(--c1)}
+.pg-sub{color:rgba(255,255,255,.55);max-width:560px;font-size:1rem;line-height:1.75}
+.svc-full-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+
+/* ─────────────────────────────
+   PORTFOLIO PAGE
+───────────────────────────── */
+.port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.pcard{background:var(--white);border-radius:var(--rl);overflow:hidden;border:1px solid var(--border);transition:transform .2s,box-shadow .2s}
+.pcard:hover{transform:translateY(-5px);box-shadow:0 24px 48px rgba(0,0,0,.08)}
+.pthumb{height:190px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;position:relative}
+.pthumb.a{background:linear-gradient(135deg,#FF4D00,#FFB800)}
+.pthumb.b{background:linear-gradient(135deg,#00C2A8,#0077FF)}
+.pthumb.c{background:linear-gradient(135deg,#1A1A2E,#4A3F8A)}
+.plabel{position:absolute;top:.75rem;left:.75rem;background:rgba(0,0,0,.45);color:rgba(255,255,255,.9);font-size:.7rem;font-weight:700;padding:.25rem .65rem;border-radius:50px;letter-spacing:.05em}
+.pbody{padding:1.5rem}
+.pbody h3{font-family:var(--fh);font-size:1.05rem;font-weight:700;margin-bottom:.4rem}
+.pbody p{color:var(--muted);font-size:.86rem;line-height:1.55;margin-bottom:1rem}
+.presult{display:inline-flex;align-items:center;gap:.35rem;background:rgba(0,194,168,.1);color:#007A6A;font-size:.76rem;font-weight:700;padding:.28rem .75rem;border-radius:50px}
+
+/* ─────────────────────────────
+   ABOUT PAGE
+───────────────────────────── */
+.about-split{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:2.5rem}
+.avis{background:var(--c4);border-radius:var(--rl);padding:2.5rem;position:relative;overflow:hidden}
+.avis-glow{position:absolute;top:-40px;right:-40px;width:220px;height:220px;background:radial-gradient(circle,rgba(255,77,0,.28),transparent 70%);border-radius:50%}
+.arow{display:flex;flex-direction:column;gap:.9rem;position:relative;z-index:1}
+.amc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:11px;padding:1rem 1.2rem;display:flex;align-items:center;gap:.9rem}
+.ami{width:36px;height:36px;border-radius:8px;background:rgba(255,77,0,.2);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.amc strong{display:block;color:var(--white);font-size:.86rem;font-weight:600;margin-bottom:.15rem}
+.amc p{color:rgba(255,255,255,.45);font-size:.78rem}
+.vals{margin-top:2rem;display:flex;flex-direction:column;gap:.9rem}
+.vitem{display:flex;align-items:flex-start;gap:.7rem}
+.vdot{width:7px;height:7px;border-radius:50%;background:var(--c1);margin-top:.45rem;flex-shrink:0}
+.vitem p{font-size:.92rem;color:var(--text);line-height:1.55}
+
+/* ─────────────────────────────
+   BLOG PAGE
+───────────────────────────── */
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.bcard{background:var(--white);border-radius:var(--rl);overflow:hidden;border:1px solid var(--border);transition:transform .2s}
+.bcard:hover{transform:translateY(-4px)}
+.bthumb{height:155px;display:flex;align-items:center;justify-content:center;font-size:2.5rem}
+.bt1{background:#FFF0EB}.bt2{background:#EAFAF6}.bt3{background:#FFF8E5}.bt4{background:#EBF2FF}
+.bbody{padding:1.4rem}
+.bcat{font-size:.7rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--c1);margin-bottom:.45rem;display:block}
+.bbody h3{font-family:var(--fh);font-size:.98rem;font-weight:700;line-height:1.4;margin-bottom:.45rem}
+.bbody p{color:var(--muted);font-size:.83rem;line-height:1.55;margin-bottom:.9rem}
+.bmeta{font-size:.76rem;color:var(--muted)}
+
+/* ─────────────────────────────
+   TOOLS PAGE
+───────────────────────────── */
+.audit-wrap{max-width:780px;margin:3rem auto 0;background:var(--white);border-radius:var(--rl);border:1px solid var(--border);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.06)}
+.audit-head{background:var(--c4);padding:2.5rem;text-align:center;position:relative;overflow:hidden}
+.audit-head-glow{position:absolute;inset:0;background:radial-gradient(circle at 70% 50%,rgba(255,77,0,.22),transparent 60%);pointer-events:none}
+.audit-head h2{font-family:var(--fh);font-size:1.75rem;font-weight:800;color:var(--white);position:relative;letter-spacing:-1px}
+.audit-head p{color:rgba(255,255,255,.5);margin-top:.4rem;font-size:.88rem;position:relative}
+.audit-form{padding:2.5rem;display:flex;flex-direction:column;gap:1.1rem}
+.af-label{font-size:.82rem;font-weight:700;color:var(--text);display:block;margin-bottom:.35rem}
+.af-input{width:100%;padding:.8rem 1rem;border:1.5px solid var(--border);border-radius:10px;font-family:var(--fb);font-size:.93rem;outline:none;transition:border-color .2s}
+.af-input:focus{border-color:var(--c1)}
+.audit-btn{background:var(--c1);color:var(--white);padding:1rem;border-radius:10px;border:none;font-family:var(--fh);font-size:.98rem;font-weight:700;cursor:pointer;width:100%;transition:background .2s;letter-spacing:.02em}
+.audit-btn:hover:not(:disabled){background:#e04000}
+.audit-btn:disabled{opacity:.55;cursor:not-allowed}
+.audit-loading{text-align:center;padding:2rem;display:none}
+.audit-loading.show{display:block}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--c1);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.audit-results{padding:0 2.5rem 2.5rem;display:none}
+.audit-results.show{display:block}
+.audit-err{background:#FFF0EB;border:1px solid #ffbfaa;border-radius:10px;padding:.9rem 1rem;color:#cc3000;font-size:.86rem;display:none;margin-top:.5rem}
+.audit-err.show{display:block}
+.score-row{display:flex;align-items:center;gap:1.5rem;padding:1.5rem;background:var(--c5);border-radius:12px;margin-bottom:1.5rem}
+.score-circ{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:1.6rem;font-weight:800;flex-shrink:0;border:3px solid}
+.sc-good{border-color:#00C2A8;color:#007A6A;background:#EAFAF6}
+.sc-warn{border-color:#FFB800;color:#8B6A00;background:#FFF8E5}
+.sc-bad{border-color:#FF4D00;color:#cc2200;background:#FFF0EB}
+.score-txt h3{font-family:var(--fh);font-size:1rem;font-weight:700;margin-bottom:.3rem}
+.score-txt p{color:var(--muted);font-size:.84rem;line-height:1.5}
+.checks{display:flex;flex-direction:column;gap:.7rem}
+.ci{display:flex;align-items:flex-start;gap:.7rem;padding:.85rem 1rem;border-radius:10px;border:1px solid}
+.ci.pass{background:#EAFAF6;border-color:#b5e8df}
+.ci.fail{background:#FFF0EB;border-color:#ffbfaa}
+.ci.warn{background:#FFF8E5;border-color:#ffe49f}
+.ci-ico{font-size:.95rem;margin-top:.1rem;flex-shrink:0}
+.ci-txt strong{display:block;font-size:.85rem;font-weight:700;margin-bottom:.15rem}
+.ci-txt p{font-size:.8rem;color:var(--muted);line-height:1.4}
+
+/* ─────────────────────────────
+   CONTACT PAGE
+───────────────────────────── */
+.contact-split{display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;margin-top:2.5rem;align-items:start}
+.cinfo h3{font-family:var(--fh);font-size:1.25rem;font-weight:700;margin-bottom:.9rem}
+.cinfo p{color:var(--muted);line-height:1.72;font-size:.92rem;margin-bottom:1.4rem}
+.cdeets{display:flex;flex-direction:column;gap:1rem}
+.cdi{display:flex;gap:.75rem;align-items:flex-start}
+.cdi-ico{width:36px;height:36px;background:rgba(255,77,0,.09);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.cdi strong{display:block;font-weight:600;font-size:.86rem;margin-bottom:.1rem}
+.cdi p{font-size:.84rem;color:var(--muted)}
+.cform{background:var(--c5);border-radius:var(--rl);padding:2.5rem;border:1px solid var(--border)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.ff{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.9rem}
+.ff label{font-size:.8rem;font-weight:700;color:var(--text)}
+.ff input,.ff select,.ff textarea{padding:.78rem 1rem;border:1.5px solid var(--border);border-radius:10px;font-family:var(--fb);font-size:.9rem;background:var(--white);outline:none;transition:border-color .2s}
+.ff input:focus,.ff select:focus,.ff textarea:focus{border-color:var(--c1)}
+.ff textarea{resize:vertical;min-height:120px}
+.fsuccess{display:none;background:#EAFAF6;border:1px solid #b5e8df;border-radius:10px;padding:.9rem 1rem;color:#007A6A;font-size:.86rem;text-align:center;margin-top:.5rem}
+.fsuccess.show{display:block}
+
+/* ── FOOTER ── */
+footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
+.ftop{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.fbrand .logo{display:block;margin-bottom:.9rem}
+.fbrand p{color:rgba(255,255,255,.38);font-size:.82rem;line-height:1.7;max-width:250px}
+.fcol h4{color:var(--white);font-family:var(--fh);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.fcol ul li a{color:rgba(255,255,255,.38);text-decoration:none;font-size:.82rem;transition:color .2s;cursor:pointer}
+.fcol ul li a:hover{color:var(--c1)}
+.fbot{border-top:1px solid rgba(255,255,255,.07);padding-top:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.fbot p{color:rgba(255,255,255,.28);font-size:.76rem}
+.socials{display:flex;gap:.65rem}
+.sol{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:.82rem;font-weight:700;color:rgba(255,255,255,.45);transition:all .2s}
+.sol:hover{background:var(--c1);color:var(--white)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .nav-links{display:none}
+  .nav-toggle{display:flex}
+  .hero-grid{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .approach-grid{grid-template-columns:1fr 1fr}
+  .svc-grid,.svc-full-grid,.port-grid,.blog-grid{grid-template-columns:1fr 1fr}
+  .about-split,.contact-split{grid-template-columns:1fr}
+  .ftop{grid-template-columns:1fr 1fr}
+  .frow{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  section{padding:70px 0}
+  .svc-grid,.svc-full-grid,.port-grid,.blog-grid{grid-template-columns:1fr}
+  .approach-grid{grid-template-columns:1fr}
+  .ftop{grid-template-columns:1fr}
+  .hero-stats{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="logo" onclick="go('home')">VM<span>C</span></a>
+    <ul class="nav-links">
+      <li><a onclick="go('home')">Home</a></li>
+      <li><a onclick="go('services')">Services</a></li>
+      <li><a onclick="go('portfolio')">Portfolio</a></li>
+      <li><a onclick="go('about')">About</a></li>
+      <li><a onclick="go('blog')">Blog</a></li>
+      <li><a onclick="go('tools')">Free Audit</a></li>
+      <li><a class="ncta" onclick="go('contact')">Get a Quote</a></li>
+    </ul>
+    <div class="nav-toggle" onclick="toggleMob()" id="nt"><span></span><span></span><span></span></div>
+  </div>
+  <div class="mob" id="mob">
+    <a onclick="go('home');closeMob()">Home</a>
+    <a onclick="go('services');closeMob()">Services</a>
+    <a onclick="go('portfolio');closeMob()">Portfolio</a>
+    <a onclick="go('about');closeMob()">About</a>
+    <a onclick="go('blog');closeMob()">Blog</a>
+    <a onclick="go('tools');closeMob()">Free On-Page Audit</a>
+    <a onclick="go('contact');closeMob()">Get a Quote</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════
+     HOME
+═══════════════════════════════ -->
+<div id="home" class="page active">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-glow1"></div>
+    <div class="hero-glow2"></div>
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-badge">🇵🇭 Digital Agency · Philippines</div>
+          <h1 class="hero-title">Grow Your<br>Business With<br><span class="hl">Smarter</span>Digital Marketing.</h1>
+          <p class="hero-sub">VMC Advertising Agency helps Philippine businesses dominate online — through SEO, high-converting websites, and AI-powered marketing systems built for sustainable growth.</p>
+          <div class="hero-btns">
+            <button class="btn-o" onclick="go('contact')">Get a Free Quote</button>
+            <button class="btn-g" onclick="go('tools')">Try Free On-Page Audit</button>
+          </div>
+          <div class="hero-stats">
+            <div><span class="stat-n">50+</span><span class="stat-l">Projects Delivered</span></div>
+            <div><span class="stat-n">3×</span><span class="stat-l">Avg. Traffic Growth</span></div>
+            <div><span class="stat-n">100%</span><span class="stat-l">Results Focused</span></div>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="hero-card-stack">
+            <div class="hcard"><div class="hcard-icon">🌐</div><div class="hcard-text"><strong>Website Development</strong><span>Fast, SEO-ready, mobile-first</span></div><span class="hcard-pill">Most Popular</span></div>
+            <div class="hcard"><div class="hcard-icon">📈</div><div class="hcard-text"><strong>SEO Optimization</strong><span>Rank higher, get found</span></div><span class="hcard-pill" style="background:rgba(255,184,0,.15);color:#FFB800">High ROI</span></div>
+            <div class="hcard"><div class="hcard-icon">📍</div><div class="hcard-text"><strong>Local SEO</strong><span>Dominate your local market</span></div></div>
+            <div class="hcard"><div class="hcard-icon">🎨</div><div class="hcard-text"><strong>Branding & Identity</strong><span>Stand out from competition</span></div></div>
+            <div class="hcard"><div class="hcard-icon">⚙️</div><div class="hcard-text"><strong>Marketing Automation</strong><span>Convert leads on autopilot</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRUSTED STRIP -->
+  <div class="trust">
+    <div class="wrap">
+      <div class="trust-inner">
+        <span class="trust-label">Services We Deliver</span>
+        <div class="trust-pills">
+          <span class="tpill">SEO</span>
+          <span class="tpill">Web Development</span>
+          <span class="tpill">Local SEO</span>
+          <span class="tpill">Google Business Profile</span>
+          <span class="tpill">Branding</span>
+          <span class="tpill">Social Media</span>
+          <span class="tpill">Marketing Automation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPROACH -->
+  <section class="approach">
+    <div class="wrap">
+      <div style="text-align:center;margin-bottom:.5rem"><span class="eyebrow">How We Work</span></div>
+      <h2 class="stitle" style="text-align:center;margin:0 auto 1rem">Our 4-Step Approach</h2>
+      <p class="ssub" style="text-align:center;margin:0 auto">Every engagement starts with deep research and ends with measurable, sustainable results.</p>
+      <div class="approach-grid">
+        <div class="astep"><div class="astep-num">01</div><h3>Audit & Research</h3><p>We analyze your digital presence, competitors, and opportunities to find quick wins and long-term strategy.</p></div>
+        <div class="astep"><div class="astep-num">02</div><h3>Strategy & Roadmap</h3><p>We build a tailored digital marketing roadmap aligned with your goals, audience, and budget.</p></div>
+        <div class="astep"><div class="astep-num">03</div><h3>Delivery & Execution</h3><p>Our team executes with speed — websites, SEO, campaigns — everything built to convert visitors.</p></div>
+        <div class="astep"><div class="astep-num">04</div><h3>Analyze & Iterate</h3><p>We track every metric and continuously optimize so your results keep compounding over time.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES PREVIEW -->
+  <section class="sprv">
+    <div class="wrap">
+      <span class="eyebrow">What We Offer</span>
+      <div class="svc-row">
+        <h2 class="stitle" style="margin-bottom:0">Core Services</h2>
+        <button class="btn-o" onclick="go('services')">See All Services →</button>
+      </div>
+      <div class="svc-grid">
+        <div class="scard"><div class="scard-icon">🌐</div><h3>Website Development</h3><p>Fast-loading, mobile-first websites with clean UI and SEO-friendly structure built to rank and convert.</p><span class="scard-tag">↗ Most Popular</span></div>
+        <div class="scard"><div class="scard-icon">📈</div><h3>SEO Optimization</h3><p>Technical SEO, on-page structure, Core Web Vitals, and keyword strategy to grow your organic traffic.</p><span class="scard-tag">↗ High ROI</span></div>
+        <div class="scard"><div class="scard-icon">📍</div><h3>Local SEO</h3><p>Google Business Profile optimization, local citations, and map pack rankings for Philippine businesses.</p><span class="scard-tag">↗ Local Reach</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA STRIP -->
+  <div class="cstrip">
+    <div class="wrap">
+      <h2>Ready to Fix Your Digital Presence?</h2>
+      <p>Let's build something that actually grows your business.</p>
+      <button class="btn-w" onclick="go('contact')">Get a Free Consultation</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer><div class="wrap"><div class="ftop">
+    <div class="fbrand"><a class="logo" onclick="go('home')">VM<span>C</span></a><p>Smart Marketing. Sustainable Growth. Helping Philippine businesses build a powerful digital presence.</p></div>
+    <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Website Development</a></li><li><a onclick="go('services')">SEO Optimization</a></li><li><a onclick="go('services')">Local SEO</a></li><li><a onclick="go('services')">Social Media</a></li><li><a onclick="go('services')">Branding</a></li></ul></div>
+    <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About VMC</a></li><li><a onclick="go('portfolio')">Our Work</a></li><li><a onclick="go('blog')">Blog</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+    <div class="fcol"><h4>Free Tools</h4><ul><li><a onclick="go('tools')">On-Page SEO Audit</a></li><li><a onclick="go('contact')">Free Consultation</a></li></ul></div>
+  </div><div class="fbot"><p>© 2026 VMC Advertising Agency · Philippines · All rights reserved.</p><div class="socials"><a class="sol">f</a><a class="sol">in</a><a class="sol">li</a></div></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
+     SERVICES
+═══════════════════════════════ -->
+<div id="services" class="page">
+  <div class="pg-hero"><div class="pg-hero-glow"></div>
+    <div class="wrap"><span class="eyebrow" style="color:#FF7A3D">Our Services</span>
+      <h1 class="pg-title">Everything You Need<br>to <span>Grow Online</span></h1>
+      <p class="pg-sub">A full suite of digital marketing services designed for Philippine businesses ready to scale.</p>
+    </div>
+  </div>
+  <section style="background:var(--c5)"><div class="wrap">
+    <div class="svc-full-grid">
+      <div class="scard"><div class="scard-icon">🌐</div><h3>Website Development</h3><p>Fast-loading, mobile-first websites with clean UI, SEO-friendly structure, and strong calls-to-action. Built to rank and convert.</p></div>
+      <div class="scard"><div class="scard-icon">📈</div><h3>SEO Optimization</h3><p>Full technical SEO, on-page structure, Core Web Vitals, internal linking, and keyword strategy to grow your organic traffic.</p></div>
+      <div class="scard"><div class="scard-icon">📍</div><h3>Local SEO</h3><p>Google Business Profile setup and optimization, local citations, map pack rankings — perfect for businesses targeting local customers.</p></div>
+      <div class="scard"><div class="scard-icon">📱</div><h3>Social Media Management</h3><p>Content creation, posting schedules, and community management across Facebook, Instagram, and TikTok.</p></div>
+      <div class="scard"><div class="scard-icon">🎨</div><h3>Branding & Identity</h3><p>Logo design, color palettes, typography, and complete brand guidelines that make your business unforgettable.</p></div>
+      <div class="scard"><div class="scard-icon">📝</div><h3>Content Creation</h3><p>SEO-optimized blog posts, landing page copy, and marketing content that speaks to your audience and ranks on Google.</p></div>
+      <div class="scard"><div class="scard-icon">🚀</div><h3>Landing Page Development</h3><p>High-converting landing pages built for ad campaigns, lead generation, or product launches. Tested and optimized.</p></div>
+      <div class="scard"><div class="scard-icon">⚙️</div><h3>Marketing Automation</h3><p>Email sequences, CRM setup, lead nurturing, and AI-assisted workflows to convert leads on autopilot.</p></div>
+      <div class="scard"><div class="scard-icon">📊</div><h3>Analytics & Reporting</h3><p>Monthly reports, traffic dashboards, conversion tracking, and actionable insights — so you always know what's working.</p></div>
+    </div>
+  </div></section>
+  <div class="cstrip"><div class="wrap"><h2>Not Sure Which Service You Need?</h2><p>We'll audit your current digital presence for free and tell you exactly what to focus on.</p><button class="btn-w" onclick="go('contact')">Book a Free Audit</button></div></div>
+  <footer><div class="wrap"><div class="ftop">
+    <div class="fbrand"><a class="logo" onclick="go('home')">VM<span>C</span></a><p>Smart Marketing. Sustainable Growth.</p></div>
+    <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li><li><a onclick="go('services')">Local SEO</a></li><li><a onclick="go('services')">Social Media</a></li></ul></div>
+    <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('portfolio')">Portfolio</a></li><li><a onclick="go('blog')">Blog</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+    <div class="fcol"><h4>Tools</h4><ul><li><a onclick="go('tools')">On-Page Audit</a></li><li><a onclick="go('contact')">Free Consult</a></li></ul></div>
+  </div><div class="fbot"><p>© 2026 VMC Advertising Agency · Philippines</p><div class="socials"><a class="sol">f</a><a class="sol">in</a><a class="sol">li</a></div></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
+     PORTFOLIO
+═══════════════════════════════ -->
+<div id="portfolio" class="page">
+  <div class="pg-hero"><div class="pg-hero-glow"></div>
+    <div class="wrap"><span class="eyebrow" style="color:#FF7A3D">Our Work</span>
+      <h1 class="pg-title">Results We've <span>Delivered</span></h1>
+      <p class="pg-sub">Real projects, real results. Here's how we've helped businesses grow their digital presence.</p>
+    </div>
+  </div>
+  <section style="background:var(--c5)"><div class="wrap">
+    <div class="port-grid">
+      <div class="pcard"><div class="pthumb a"><span class="plabel">Local SEO</span>🌸</div><div class="pbody"><h3>Local Flower Shop — Cebu</h3><p>Rebuilt the website, optimized Google Business Profile, and ran a full Local SEO campaign.</p><span class="presult">📈 Tripled monthly orders in 90 days</span></div></div>
+      <div class="pcard"><div class="pthumb b"><span class="plabel">SEO + Web Dev</span>🏨</div><div class="pbody"><h3>Tourism Resort — Palawan</h3><p>Fast-loading booking website and full SEO strategy targeting international travelers.</p><span class="presult">📈 12,000+ monthly visitors</span></div></div>
+      <div class="pcard"><div class="pthumb c"><span class="plabel">Branding + Web</span>🏢</div><div class="pbody"><h3>Construction Company — Manila</h3><p>Complete rebrand, new website, and lead generation landing pages.</p><span class="presult">📈 60% more qualified leads</span></div></div>
+      <div class="pcard"><div class="pthumb a"><span class="plabel">Social Media</span>🍜</div><div class="pbody"><h3>Restaurant Chain — Davao</h3><p>Social media content, Facebook ad campaigns, and organic growth strategy.</p><span class="presult">📈 5× Instagram following growth</span></div></div>
+      <div class="pcard"><div class="pthumb b"><span class="plabel">Automation</span>🛒</div><div class="pbody"><h3>E-Commerce Store — Nationwide</h3><p>Email automation, cart abandonment flows, and a loyalty program system.</p><span class="presult">📈 35% more repeat customers</span></div></div>
+      <div class="pcard"><div class="pthumb c"><span class="plabel">SEO</span>⚖️</div><div class="pbody"><h3>Law Firm — Quezon City</h3><p>Technical SEO overhaul and content strategy to rank for high-intent legal keywords in Metro Manila.</p><span class="presult">📈 Ranks #1 for 40+ keywords</span></div></div>
+    </div>
+  </div></section>
+  <div class="cstrip"><div class="wrap"><h2>Want Results Like These?</h2><p>Let's talk about your business and build a strategy that works.</p><button class="btn-w" onclick="go('contact')">Start Your Project</button></div></div>
+  <footer><div class="wrap"><div class="ftop">
+    <div class="fbrand"><a class="logo" onclick="go('home')">VM<span>C</span></a><p>Smart Marketing. Sustainable Growth.</p></div>
+    <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li><li><a onclick="go('services')">Local SEO</a></li></ul></div>
+    <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('portfolio')">Portfolio</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+    <div class="fcol"><h4>Tools</h4><ul><li><a onclick="go('tools')">On-Page Audit</a></li></ul></div>
+  </div><div class="fbot"><p>© 2026 VMC Advertising Agency · Philippines</p><div class="socials"><a class="sol">f</a><a class="sol">in</a><a class="sol">li</a></div></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
+     ABOUT
+═══════════════════════════════ -->
+<div id="about" class="page">
+  <div class="pg-hero"><div class="pg-hero-glow"></div>
+    <div class="wrap"><span class="eyebrow" style="color:#FF7A3D">About VMC</span>
+      <h1 class="pg-title">We Help Philippine<br><span>Businesses Win Online</span></h1>
+      <p class="pg-sub">A digital-first agency built for modern businesses — combining SEO, web development, and AI-powered workflows.</p>
+    </div>
+  </div>
+  <section><div class="wrap">
+    <div class="about-split">
+      <div>
+        <span class="eyebrow">Our Story</span>
+        <h2 class="stitle">Built for Growth,<br>Driven by Results</h2>
+        <p class="ssub">VMC Advertising Agency was built with one mission: help Philippine businesses compete and win online. We combine deep SEO knowledge, modern web development, and AI-assisted tools to deliver results that actually move the needle.</p>
+        <p class="ssub" style="margin-top:1rem">We think globally while acting locally — understanding the Philippine market deeply while applying world-class digital marketing strategies.</p>
+        <div class="vals">
+          <div class="vitem"><div class="vdot"></div><p><strong>Speed first.</strong> Fast websites, fast results, fast communication.</p></div>
+          <div class="vitem"><div class="vdot"></div><p><strong>SEO at the core.</strong> Every page we build is designed to be found on Google.</p></div>
+          <div class="vitem"><div class="vdot"></div><p><strong>Conversion focused.</strong> Traffic means nothing if it doesn't convert to sales.</p></div>
+          <div class="vitem"><div class="vdot"></div><p><strong>AI-assisted workflows.</strong> We use the latest tools to deliver faster and smarter.</p></div>
+          <div class="vitem"><div class="vdot"></div><p><strong>Transparent reporting.</strong> You always know exactly what we're doing and why.</p></div>
+        </div>
+      </div>
+      <div class="avis">
+        <div class="avis-glow"></div>
+        <div class="arow">
+          <div class="amc"><div class="ami">📍</div><div><strong>Based in Philippines</strong><p>Serving clients locally and globally</p></div></div>
+          <div class="amc"><div class="ami">🤖</div><div><strong>AI-Powered Workflows</strong><p>Faster delivery, smarter strategy</p></div></div>
+          <div class="amc"><div class="ami">📈</div><div><strong>Growth-Obsessed</strong><p>Every decision tied to your ROI</p></div></div>
+          <div class="amc"><div class="ami">🔧</div><div><strong>Full-Service Agency</strong><p>Web, SEO, branding, social & more</p></div></div>
+          <div class="amc"><div class="ami">🚀</div><div><strong>Scalable Systems</strong><p>Built to grow with your business</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div></section>
+  <div class="cstrip"><div class="wrap"><h2>Let's Work Together</h2><p>Tell us about your business and we'll map out your digital growth strategy.</p><button class="btn-w" onclick="go('contact')">Get in Touch</button></div></div>
+  <footer><div class="wrap"><div class="ftop">
+    <div class="fbrand"><a class="logo" onclick="go('home')">VM<span>C</span></a><p>Smart Marketing. Sustainable Growth.</p></div>
+    <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li><li><a onclick="go('services')">Local SEO</a></li></ul></div>
+    <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('portfolio')">Portfolio</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+    <div class="fcol"><h4>Tools</h4><ul><li><a onclick="go('tools')">On-Page Audit</a></li></ul></div>
+  </div><div class="fbot"><p>© 2026 VMC Advertising Agency · Philippines</p><div class="socials"><a class="sol">f</a><a class="sol">in</a><a class="sol">li</a></div></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
+     BLOG
+═══════════════════════════════ -->
+<div id="blog" class="page">
+  <div class="pg-hero"><div class="pg-hero-glow"></div>
+    <div class="wrap"><span class="eyebrow" style="color:#FF7A3D">VMC Blog</span>
+      <h1 class="pg-title">Digital Marketing <span>Insights</span></h1>
+      <p class="pg-sub">Tips, strategies, and guides to help Philippine businesses grow online.</p>
+    </div>
+  </div>
+  <section><div class="wrap">
+    <div class="blog-grid">
+      <div class="bcard"><div class="bthumb bt1">📈</div><div class="bbody"><span class="bcat">SEO</span><h3>Why Your Business Isn't Ranking on Google (And How to Fix It)</h3><p>The most common SEO mistakes Philippine businesses make and what to do about them.</p><span class="bmeta">June 2026 · 6 min read</span></div></div>
+      <div class="bcard"><div class="bthumb bt2">🗺️</div><div class="bbody"><span class="bcat">Local SEO</span><h3>How to Optimize Your Google Business Profile in the Philippines</h3><p>A complete guide to getting into the Google Map Pack and attracting local customers.</p><span class="bmeta">May 2026 · 5 min read</span></div></div>
+      <div class="bcard"><div class="bthumb bt3">🌐</div><div class="bbody"><span class="bcat">Web Development</span><h3>What Makes a High-Converting Website in 2026</h3><p>Speed, structure, and calls-to-action — what separates websites that convert from ones that don't.</p><span class="bmeta">May 2026 · 7 min read</span></div></div>
+      <div class="bcard"><div class="bthumb bt4">🤖</div><div class="bbody"><span class="bcat">AI & Automation</span><h3>How We Use AI to Deliver Faster Results for Our Clients</h3><p>Behind the scenes of VMC's AI-assisted workflow — from audits to content to reporting.</p><span class="bmeta">April 2026 · 4 min read</span></div></div>
+      <div class="bcard"><div class="bthumb bt1">💰</div><div class="bbody"><span class="bcat">Marketing</span><h3>How Much Should a Philippine Business Spend on Digital Marketing?</h3><p>Budget guidance for small and medium businesses investing in their online presence.</p><span class="bmeta">April 2026 · 5 min read</span></div></div>
+      <div class="bcard"><div class="bthumb bt2">📱</div><div class="bbody"><span class="bcat">Social Media</span><h3>Facebook vs. TikTok Ads for Philippine Businesses: Which Wins?</h3><p>Platform performance data to help you decide where to put your ad budget in 2026.</p><span class="bmeta">March 2026 · 6 min read</span></div></div>
+    </div>
+  </div></section>
+  <footer><div class="wrap"><div class="ftop">
+    <div class="fbrand"><a class="logo" onclick="go('home')">VM<span>C</span></a><p>Smart Marketing. Sustainable Growth.</p></div>
+    <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li></ul></div>
+    <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('portfolio')">Portfolio</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+    <div class="fcol"><h4>Tools</h4><ul><li><a onclick="go('tools')">On-Page Audit</a></li></ul></div>
+  </div><div class="fbot"><p>© 2026 VMC Advertising Agency · Philippines</p><div class="socials"><a class="sol">f</a><a class="sol">in</a><a class="sol">li</a></div></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
+     TOOLS / AUDIT
+═══════════════════════════════ -->
+<div id="tools" class="page">
+  <div class="pg-hero"><div class="pg-hero-glow"></div>
+    <div class="wrap"><span class="eyebrow" style="color:#FF7A3D">Free Tool</span>
+      <h1 class="pg-title">AI On-Page <span>SEO Audit</span></h1>
+      <p class="pg-sub">Enter any URL and target keyword — our AI analyzes the page and gives you a detailed on-page SEO report instantly.</p>
+    </div>
+  </div>
+  <section style="background:var(--c5)"><div class="wrap">
+    <div class="audit-wrap">
+      <div class="audit-head">
+        <div class="audit-head-glow"></div>
+        <h2>On-Page SEO Analyzer</h2>
+        <p>Powered by AI · Free · No account needed</p>
+      </div>
+      <div class="audit-form">
+        <div><label class="af-label" for="aurl">Page URL</label><input class="af-input" type="url" id="aurl" placeholder="https://yourwebsite.com/page"/></div>
+        <div><label class="af-label" for="akw">Target Keyword</label><input class="af-input" type="text" id="akw" placeholder="e.g. digital marketing philippines"/></div>
+        <button class="audit-btn" id="abtn" onclick="runAudit()">Analyze Page →</button>
+        <div class="audit-err" id="aerr"></div>
+      </div>
+      <div class="audit-loading" id="aload"><div class="spinner"></div><p style="color:var(--muted);font-size:.86rem">Analyzing your page with AI…</p></div>
+      <div class="audit-results" id="ares"></div>
+    </div>
+  </div></section>
+  <footer><div class="wrap"><div class="ftop">
+    <div class="fbrand"><a class="logo" onclick="go('home')">VM<span>C</span></a><p>Smart Marketing. Sustainable Growth.</p></div>
+    <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li></ul></div>
+    <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+    <div class="fcol"><h4>Tools</h4><ul><li><a onclick="go('tools')">On-Page Audit</a></li></ul></div>
+  </div><div class="fbot"><p>© 2026 VMC Advertising Agency · Philippines</p><div class="socials"><a class="sol">f</a><a class="sol">in</a><a class="sol">li</a></div></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
+     CONTACT
+═══════════════════════════════ -->
+<div id="contact" class="page">
+  <div class="pg-hero"><div class="pg-hero-glow"></div>
+    <div class="wrap"><span class="eyebrow" style="color:#FF7A3D">Get In Touch</span>
+      <h1 class="pg-title">Let's Talk About Your <span>Business Growth</span></h1>
+      <p class="pg-sub">Whether you need a new website, better SEO, or just an expert second opinion — we're here.</p>
+    </div>
+  </div>
+  <section><div class="wrap">
+    <div class="contact-split">
+      <div class="cinfo">
+        <h3>We'd love to hear from you.</h3>
+        <p>Tell us about your business and goals. We'll respond within 24 hours with honest advice — no pressure, no sales pitch.</p>
+        <div class="cdeets">
+          <div class="cdi"><div class="cdi-ico">📍</div><div><strong>Location</strong><p>Philippines — serving clients locally & globally</p></div></div>
+          <div class="cdi"><div class="cdi-ico">📧</div><div><strong>Email</strong><p>hello@vmcagency.com</p></div></div>
+          <div class="cdi"><div class="cdi-ico">💬</div><div><strong>Response Time</strong><p>Within 24 hours on business days</p></div></div>
+          <div class="cdi"><div class="cdi-ico">🕐</div><div><strong>Hours</strong><p>Monday – Friday, 9:00 AM – 6:00 PM PHT</p></div></div>
+        </div>
+      </div>
+      <div class="cform">
+        <div class="frow">
+          <div class="ff"><label>First Name</label><input type="text" placeholder="Juan"/></div>
+          <div class="ff"><label>Last Name</label><input type="text" placeholder="dela Cruz"/></div>
+        </div>
+        <div class="ff"><label>Email Address</label><input type="email" placeholder="juan@yourbusiness.com"/></div>
+        <div class="ff"><label>Business Name</label><input type="text" placeholder="Your Business"/></div>
+        <div class="ff"><label>Service Needed</label>
+          <select>
+            <option value="">Select a service…</option>
+            <option>Website Development</option>
+            <option>SEO Optimization</option>
+            <option>Local SEO</option>
+            <option>Social Media Management</option>
+            <option>Branding & Identity</option>
+            <option>Content Creation</option>
+            <option>Marketing Automation</option>
+            <option>Full Digital Marketing Package</option>
+            <option>Not Sure — I Need Advice</option>
+          </select>
+        </div>
+        <div class="ff"><label>Tell us about your project</label><textarea placeholder="What are your goals? What challenges are you facing?"></textarea></div>
+        <button class="btn-dk" style="width:100%;padding:1rem;border-radius:10px;font-size:.97rem" onclick="submitForm()">Send Message →</button>
+        <div class="fsuccess" id="fsuc">✅ Message sent! We'll get back to you within 24 hours.</div>
+      </div>
+    </div>
+  </div></section>
+  <footer><div class="wrap"><div class="ftop">
+    <div class="fbrand"><a class="logo" onclick="go('home')">VM<span>C</span></a><p>Smart Marketing. Sustainable Growth.</p></div>
+    <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li><li><a onclick="go('services')">Local SEO</a></li></ul></div>
+    <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('portfolio')">Portfolio</a></li><li><a onclick="go('blog')">Blog</a></li></ul></div>
+    <div class="fcol"><h4>Tools</h4><ul><li><a onclick="go('tools')">On-Page Audit</a></li></ul></div>
+  </div><div class="fbot"><p>© 2026 VMC Advertising Agency · Philippines</p><div class="socials"><a class="sol">f</a><a class="sol">in</a><a class="sol">li</a></div></div></div></footer>
+</div>
+
+<script>
+// ═══ ROUTING — clean, bulletproof ═══
+function go(id){
+  // hide all
+  document.querySelectorAll('.page').forEach(p=>{
+    p.classList.remove('active');
+  });
+  // show target
+  const el=document.getElementById(id);
+  if(el) el.classList.add('active');
+  // nav style
+  updateNav(id);
+  // scroll to top
+  window.scrollTo(0,0);
+}
+
+function updateNav(id){
+  const nb=document.getElementById('navbar');
+  // dark pages: home hero is dark, keep nav dark
+  // light pages: use light nav
+  if(id==='home'){
+    nb.classList.remove('light');
+  } else {
+    nb.classList.add('light');
+  }
+}
+
+function toggleMob(){document.getElementById('mob').classList.toggle('open')}
+function closeMob(){document.getElementById('mob').classList.remove('open')}
+
+// ═══ CONTACT FORM ═══
+function submitForm(){
+  document.getElementById('fsuc').classList.add('show');
+  setTimeout(()=>document.getElementById('fsuc').classList.remove('show'),5000);
+}
+
+// ═══ AI ON-PAGE AUDIT ═══
+// ↓ Replace this URL with your Cloudflare Worker URL after deploying
+// e.g. https://vmc-audit-proxy.YOUR-SUBDOMAIN.workers.dev
+const WORKER_URL = 'https://vmc-audit-proxy.vicarmark92.workers.dev';
+
+async function runAudit(){
+  const url=document.getElementById('aurl').value.trim();
+  const kw=document.getElementById('akw').value.trim();
+  const err=document.getElementById('aerr');
+  const load=document.getElementById('aload');
+  const res=document.getElementById('ares');
+  const btn=document.getElementById('abtn');
+
+  err.classList.remove('show');
+  res.classList.remove('show');
+  res.innerHTML='';
+
+  if(!url){err.textContent='Please enter a page URL.';err.classList.add('show');return;}
+  if(!kw){err.textContent='Please enter a target keyword.';err.classList.add('show');return;}
+
+  btn.disabled=true;
+  load.classList.add('show');
+
+  try{
+    // Calls YOUR Cloudflare Worker — API key never touches the browser
+    const r=await fetch(WORKER_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({url, keyword:kw})
+    });
+    if(!r.ok){
+      const e=await r.json().catch(()=>({}));
+      throw new Error(e.error||'Worker error');
+    }
+    const audit=await r.json();
+    renderAudit(audit,url,kw);
+  }catch(e){
+    err.textContent=e.message==='Failed to fetch'
+      ? 'Audit worker not connected yet. See setup guide.'
+      : (e.message||'Something went wrong. Please try again.');
+    err.classList.add('show');
+  }finally{
+    load.classList.remove('show');
+    btn.disabled=false;
+  }
+}
+
+function renderAudit(audit,url,kw){
+  const s=audit.score||0;
+  const sc=s>=70?'sc-good':s>=40?'sc-warn':'sc-bad';
+  const sl=s>=70?'Good SEO Health':s>=40?'Needs Improvement':'Poor — Action Required';
+  const ico={pass:'✅',warn:'⚠️',fail:'❌'};
+  const cls={pass:'pass',warn:'warn',fail:'fail'};
+  const checks=(audit.checks||[]).map(c=>`
+    <div class="ci ${cls[c.status]||''}">
+      <span class="ci-ico">${ico[c.status]||'⚪'}</span>
+      <div class="ci-txt"><strong>${c.label}</strong><p>${c.detail}</p></div>
+    </div>`).join('');
+
+  const el=document.getElementById('ares');
+  el.innerHTML=`
+    <div class="score-row">
+      <div class="score-circ ${sc}">${s}</div>
+      <div class="score-txt">
+        <h3>${sl}</h3>
+        <p>${audit.summary}</p>
+        <p style="margin-top:.35rem;font-size:.75rem;color:var(--muted)">URL: ${url} · Keyword: "${kw}"</p>
+      </div>
+    </div>
+    <div class="checks">${checks}</div>
+    <p style="text-align:center;margin-top:1.5rem;font-size:.8rem;color:var(--muted)">
+      Want a hands-on expert audit? <a href="#" onclick="go('contact')" style="color:var(--c1);font-weight:700">Book a free consultation →</a>
+    </p>`;
+  el.classList.add('show');
+}
+
+// init nav style on load
+updateNav('home');
+</script>
+</body>
+</html>
