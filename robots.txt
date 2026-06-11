@@ -1,0 +1,8 @@
+# VCM Online Service — robots.txt
+# www.vcmrk.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.vcmrk.com/sitemap.xml
