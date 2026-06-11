@@ -640,18 +640,18 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
           <div class="cdi"><div class="cdi-ico">🗺️</div><div><strong>Service Areas</strong><p>West Covina · Los Angeles · San Gabriel Valley · Nationwide</p></div></div>
           <div class="cdi"><div class="cdi-ico">📧</div><div><strong>Email</strong><p>vmc.onlineservice@gmail.com</p></div></div>
           <div class="cdi"><div class="cdi-ico">💬</div><div><strong>Response Time</strong><p>Within 24 hours on business days</p></div></div>
-          <div class="cdi"><div class="cdi-ico">🕐</div><div><strong>Hours</strong><p>Monday – Friday, 9:00 AM – 6:00 PM PHT</p></div></div>
+          <div class="cdi"><div class="cdi-ico">🕐</div><div><strong>Hours</strong><p>Monday – Friday, 9:00 AM – 6:00 PM PST</p></div></div>
         </div>
       </div>
       <div class="cform">
         <div class="frow">
-          <div class="ff"><label>First Name</label><input type="text" placeholder="Juan"/></div>
-          <div class="ff"><label>Last Name</label><input type="text" placeholder="dela Cruz"/></div>
+          <div class="ff"><label>First Name</label><input type="text" id="cf_fname" placeholder="John"/></div>
+          <div class="ff"><label>Last Name</label><input type="text" id="cf_lname" placeholder="Smith"/></div>
         </div>
-        <div class="ff"><label>Email Address</label><input type="email" placeholder="juan@yourbusiness.com"/></div>
-        <div class="ff"><label>Business Name</label><input type="text" placeholder="Your Business"/></div>
+        <div class="ff"><label>Email Address</label><input type="email" id="cf_email" placeholder="john@yourbusiness.com"/></div>
+        <div class="ff"><label>Business Name</label><input type="text" id="cf_business" placeholder="Your Business"/></div>
         <div class="ff"><label>Service Needed</label>
-          <select>
+          <select id="cf_service">
             <option value="">Select a service…</option>
             <option>Website Development</option>
             <option>SEO Optimization</option>
@@ -664,9 +664,10 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
             <option>Not Sure — I Need Advice</option>
           </select>
         </div>
-        <div class="ff"><label>Tell us about your project</label><textarea placeholder="What are your goals? What challenges are you facing?"></textarea></div>
-        <button class="btn-dk" style="width:100%;padding:1rem;border-radius:10px;font-size:.97rem" onclick="submitForm()">Send Message →</button>
+        <div class="ff"><label>Tell us about your project</label><textarea id="cf_message" placeholder="What are your goals? What challenges are you facing?"></textarea></div>
+        <button class="btn-dk" id="cf_btn" style="width:100%;padding:1rem;border-radius:10px;font-size:.97rem" onclick="submitForm()">Send Message →</button>
         <div class="fsuccess" id="fsuc">✅ Message sent! We'll get back to you within 24 hours.</div>
+        <div class="audit-err" id="cf_err" style="margin-top:.5rem"></div>
       </div>
     </div>
   </div></section>
@@ -678,7 +679,10 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
   </div><div class="fbot"><p>© 2026 Vmc Online Service · West Covina, CA</p><div class="socials"><a class="sol" title="Facebook">FB</a><a class="sol" title="Instagram">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
+// ═══ EMAILJS INIT ═══
+emailjs.init('j_KkJP7QKX5nZFPrj');
 // ═══ ROUTING — clean, bulletproof ═══
 function go(id){
   // hide all
@@ -708,10 +712,49 @@ function updateNav(id){
 function toggleMob(){document.getElementById('mob').classList.toggle('open')}
 function closeMob(){document.getElementById('mob').classList.remove('open')}
 
-// ═══ CONTACT FORM ═══
-function submitForm(){
-  document.getElementById('fsuc').classList.add('show');
-  setTimeout(()=>document.getElementById('fsuc').classList.remove('show'),5000);
+// ═══ CONTACT FORM — EmailJS ═══
+async function submitForm(){
+  const fname    = document.getElementById('cf_fname').value.trim();
+  const lname    = document.getElementById('cf_lname').value.trim();
+  const email    = document.getElementById('cf_email').value.trim();
+  const business = document.getElementById('cf_business').value.trim();
+  const service  = document.getElementById('cf_service').value;
+  const message  = document.getElementById('cf_message').value.trim();
+  const btn      = document.getElementById('cf_btn');
+  const err      = document.getElementById('cf_err');
+  const suc      = document.getElementById('fsuc');
+
+  err.classList.remove('show');
+  suc.classList.remove('show');
+
+  // Validation
+  if(!fname){err.textContent='Please enter your first name.';err.classList.add('show');return;}
+  if(!email||!/\S+@\S+\.\S+/.test(email)){err.textContent='Please enter a valid email address.';err.classList.add('show');return;}
+  if(!message){err.textContent='Please tell us about your project.';err.classList.add('show');return;}
+
+  btn.disabled=true;
+  btn.textContent='Sending…';
+
+  try{
+    await emailjs.send('service_gy7ef86','template_dpt1026',{
+      from_name : fname,
+      last_name : lname,
+      from_email: email,
+      business  : business || 'Not provided',
+      service   : service  || 'Not specified',
+      message   : message,
+    });
+    suc.classList.add('show');
+    // Clear form
+    ['cf_fname','cf_lname','cf_email','cf_business','cf_message'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('cf_service').selectedIndex=0;
+  }catch(e){
+    err.textContent='Failed to send. Please email us directly at vmc.onlineservice@gmail.com';
+    err.classList.add('show');
+  }finally{
+    btn.disabled=false;
+    btn.textContent='Send Message →';
+  }
 }
 
 // ═══ RULE-BASED ON-PAGE SEO AUDIT (Free — No API) ═══
