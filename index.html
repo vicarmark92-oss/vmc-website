@@ -284,6 +284,41 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
   .ftop{grid-template-columns:1fr}
   .hero-stats{grid-template-columns:1fr 1fr}
 }
+
+/* ─────────────────────────────
+   PRICING PAGE
+───────────────────────────── */
+.pricing-toggle{display:flex;align-items:center;justify-content:center;gap:0;margin:2.5rem auto 3rem;background:var(--c5);border:1px solid var(--border);border-radius:50px;padding:.3rem;width:fit-content}
+.ptog-btn{padding:.6rem 1.8rem;border-radius:50px;border:none;font-family:var(--fh);font-size:.88rem;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);transition:all .2s}
+.ptog-btn.active{background:var(--c1);color:var(--white)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.prc-card{background:var(--white);border-radius:var(--rl);padding:2.2rem;border:1px solid var(--border);position:relative;transition:transform .2s,box-shadow .2s}
+.prc-card:hover{transform:translateY(-5px);box-shadow:0 24px 48px rgba(0,0,0,.08)}
+.prc-card.featured{border-color:var(--c1);border-width:2px}
+.prc-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--c1);color:var(--white);font-size:.72rem;font-weight:700;padding:.3rem 1rem;border-radius:50px;letter-spacing:.06em;white-space:nowrap}
+.prc-icon{width:46px;height:46px;border-radius:11px;background:rgba(255,77,0,.08);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.2rem}
+.prc-name{font-family:var(--fh);font-size:1rem;font-weight:700;margin-bottom:.3rem}
+.prc-desc{color:var(--muted);font-size:.82rem;line-height:1.5;margin-bottom:1.5rem}
+.prc-price{display:flex;align-items:flex-end;gap:.3rem;margin-bottom:.3rem}
+.prc-amt{font-family:var(--fh);font-size:2.8rem;font-weight:800;color:var(--text);line-height:1}
+.prc-sym{font-family:var(--fh);font-size:1.2rem;font-weight:700;color:var(--muted);margin-bottom:.4rem}
+.prc-per{font-size:.8rem;color:var(--muted);margin-bottom:1.5rem}
+.prc-divider{height:1px;background:var(--border);margin:1.5rem 0}
+.prc-features{display:flex;flex-direction:column;gap:.7rem;margin-bottom:2rem}
+.prc-feat{display:flex;align-items:flex-start;gap:.6rem;font-size:.86rem;color:var(--text)}
+.prc-feat-ico{flex-shrink:0;margin-top:.05rem}
+.prc-feat.off{color:var(--muted)}
+.prc-feat.off .prc-feat-ico{opacity:.4}
+.prc-btn{width:100%;padding:.9rem;border-radius:10px;border:none;font-family:var(--fh);font-size:.92rem;font-weight:700;cursor:pointer;transition:all .2s}
+.prc-btn-main{background:var(--c1);color:var(--white)}
+.prc-btn-main:hover{background:#e04000;transform:translateY(-1px)}
+.prc-btn-out{background:transparent;color:var(--c1);border:2px solid var(--c1)!important}
+.prc-btn-out:hover{background:var(--c1);color:var(--white)}
+.pricing-note{text-align:center;margin-top:2rem;color:var(--muted);font-size:.83rem}
+.pricing-note a{color:var(--c1);font-weight:600;cursor:pointer}
+.prc-section{display:none}
+.prc-section.active{display:block}
+@media(max-width:900px){.pricing-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -295,6 +330,7 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
     <ul class="nav-links">
       <li><a onclick="go('home')">Home</a></li>
       <li><a onclick="go('services')">Services</a></li>
+      <li><a onclick="go('pricing')">Pricing</a></li>
       <li><a onclick="go('portfolio')">Portfolio</a></li>
       <li><a onclick="go('about')">About</a></li>
       <li><a onclick="go('blog')">Blog</a></li>
@@ -306,6 +342,7 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
   <div class="mob" id="mob">
     <a onclick="go('home');closeMob()">Home</a>
     <a onclick="go('services');closeMob()">Services</a>
+    <a onclick="go('pricing');closeMob()">Pricing</a>
     <a onclick="go('portfolio');closeMob()">Portfolio</a>
     <a onclick="go('about');closeMob()">About</a>
     <a onclick="go('blog');closeMob()">Blog</a>
@@ -621,6 +658,209 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
 </div>
 
 <!-- ═══════════════════════════════
+     PRICING
+═══════════════════════════════ -->
+<div id="pricing" class="page">
+  <div class="pg-hero"><div class="pg-hero-glow"></div>
+    <div class="wrap">
+      <span class="eyebrow" style="color:#FF7A3D">Transparent Pricing</span>
+      <h1 class="pg-title">Simple, Honest<br><span>Pricing</span></h1>
+      <p class="pg-sub">No hidden fees. No long-term lock-ins. Just results-focused digital marketing for West Covina businesses.</p>
+    </div>
+  </div>
+
+  <section style="background:var(--c5)"><div class="wrap">
+
+    <!-- TOGGLE -->
+    <div class="pricing-toggle">
+      <button class="ptog-btn active" id="tog-onetime" onclick="switchPricing('onetime')">Website Packages</button>
+      <button class="ptog-btn" id="tog-monthly" onclick="switchPricing('monthly')">Monthly Retainers</button>
+    </div>
+
+    <!-- ONE-TIME WEBSITE PACKAGES -->
+    <div class="prc-section active" id="prc-onetime">
+      <div class="pricing-grid">
+
+        <!-- STARTER -->
+        <div class="prc-card">
+          <div class="prc-icon">🌱</div>
+          <div class="prc-name">Starter</div>
+          <div class="prc-desc">Perfect for small businesses needing a clean, professional online presence fast.</div>
+          <div class="prc-price"><span class="prc-sym">$</span><span class="prc-amt">499</span></div>
+          <div class="prc-per">one-time payment</div>
+          <div class="prc-divider"></div>
+          <div class="prc-features">
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Up to 5 pages</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Mobile-first responsive design</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Basic on-page SEO setup</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Contact form integration</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Google Analytics setup</div>
+            <div class="prc-feat off"><span class="prc-feat-ico">❌</span> Blog / CMS</div>
+            <div class="prc-feat off"><span class="prc-feat-ico">❌</span> E-commerce</div>
+            <div class="prc-feat off"><span class="prc-feat-ico">❌</span> Custom integrations</div>
+          </div>
+          <button class="prc-btn prc-btn-out" onclick="go('contact')">Get Started</button>
+        </div>
+
+        <!-- GROWTH -->
+        <div class="prc-card featured">
+          <div class="prc-badge">⭐ MOST POPULAR</div>
+          <div class="prc-icon">🚀</div>
+          <div class="prc-name">Growth</div>
+          <div class="prc-desc">For growing businesses ready to invest in a site that ranks and converts.</div>
+          <div class="prc-price"><span class="prc-sym">$</span><span class="prc-amt">999</span></div>
+          <div class="prc-per">one-time payment</div>
+          <div class="prc-divider"></div>
+          <div class="prc-features">
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Up to 10 pages</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Mobile-first responsive design</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Full on-page SEO optimization</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Blog / CMS setup</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Google Analytics + Search Console</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Speed optimization</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> 30-day post-launch support</div>
+            <div class="prc-feat off"><span class="prc-feat-ico">❌</span> Custom integrations</div>
+          </div>
+          <button class="prc-btn prc-btn-main" onclick="go('contact')">Get Started</button>
+        </div>
+
+        <!-- PRO -->
+        <div class="prc-card">
+          <div class="prc-icon">💎</div>
+          <div class="prc-name">Pro</div>
+          <div class="prc-desc">Full custom website with advanced features, automation, and dedicated support.</div>
+          <div class="prc-price"><span class="prc-sym">$</span><span class="prc-amt">1,999</span></div>
+          <div class="prc-per">one-time payment</div>
+          <div class="prc-divider"></div>
+          <div class="prc-features">
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Unlimited pages</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Custom design & branding</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Full SEO + schema markup</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> E-commerce ready</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Marketing automation setup</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Custom integrations (CRM, booking)</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> 60-day post-launch support</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Priority response</div>
+          </div>
+          <button class="prc-btn prc-btn-out" onclick="go('contact')">Get Started</button>
+        </div>
+
+      </div>
+      <p class="pricing-note">All packages include free hosting setup on GitHub Pages or your preferred host. Need something custom? <a onclick="go('contact')">Let's talk →</a></p>
+    </div>
+
+    <!-- MONTHLY RETAINERS -->
+    <div class="prc-section" id="prc-monthly">
+      <div class="pricing-grid">
+
+        <!-- BASIC -->
+        <div class="prc-card">
+          <div class="prc-icon">📍</div>
+          <div class="prc-name">Basic</div>
+          <div class="prc-desc">Local visibility essentials for small businesses in West Covina and surrounding areas.</div>
+          <div class="prc-price"><span class="prc-sym">$</span><span class="prc-amt">299</span></div>
+          <div class="prc-per">per month · cancel anytime</div>
+          <div class="prc-divider"></div>
+          <div class="prc-features">
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Google Business Profile management</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Local SEO optimization</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Monthly performance report</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Citation building (5/mo)</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Keyword rank tracking</div>
+            <div class="prc-feat off"><span class="prc-feat-ico">❌</span> Social media management</div>
+            <div class="prc-feat off"><span class="prc-feat-ico">❌</span> Content creation</div>
+            <div class="prc-feat off"><span class="prc-feat-ico">❌</span> Ad campaign management</div>
+          </div>
+          <button class="prc-btn prc-btn-out" onclick="go('contact')">Get Started</button>
+        </div>
+
+        <!-- GROWTH -->
+        <div class="prc-card featured">
+          <div class="prc-badge">⭐ BEST VALUE</div>
+          <div class="prc-icon">📈</div>
+          <div class="prc-name">Growth</div>
+          <div class="prc-desc">The complete local marketing package for businesses ready to dominate their market.</div>
+          <div class="prc-price"><span class="prc-sym">$</span><span class="prc-amt">599</span></div>
+          <div class="prc-per">per month · cancel anytime</div>
+          <div class="prc-divider"></div>
+          <div class="prc-features">
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Everything in Basic</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Social media management (3 posts/wk)</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> 2 SEO blog posts per month</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> On-page SEO updates</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Competitor analysis</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Bi-weekly strategy call</div>
+            <div class="prc-feat off"><span class="prc-feat-ico">❌</span> Paid ad management</div>
+            <div class="prc-feat off"><span class="prc-feat-ico">❌</span> Marketing automation</div>
+          </div>
+          <button class="prc-btn prc-btn-main" onclick="go('contact')">Get Started</button>
+        </div>
+
+        <!-- PREMIUM -->
+        <div class="prc-card">
+          <div class="prc-icon">👑</div>
+          <div class="prc-name">Premium</div>
+          <div class="prc-desc">Full-service digital marketing — everything you need to grow fast and dominate online.</div>
+          <div class="prc-price"><span class="prc-sym">$</span><span class="prc-amt">999</span></div>
+          <div class="prc-per">per month · cancel anytime</div>
+          <div class="prc-divider"></div>
+          <div class="prc-features">
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Everything in Growth</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Google / Meta ad management</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Marketing automation setup</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Email marketing campaigns</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> 4 SEO blog posts per month</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Weekly strategy call</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Dedicated account manager</div>
+            <div class="prc-feat"><span class="prc-feat-ico">✅</span> Priority 24hr support</div>
+          </div>
+          <button class="prc-btn prc-btn-out" onclick="go('contact')">Get Started</button>
+        </div>
+
+      </div>
+      <p class="pricing-note">All retainers are month-to-month with no long-term contracts. Not sure which plan fits? <a onclick="go('contact')">Book a free consultation →</a></p>
+    </div>
+
+    <!-- FAQ ROW -->
+    <div style="max-width:720px;margin:4rem auto 0">
+      <h3 style="font-family:var(--fh);font-size:1.4rem;font-weight:800;text-align:center;margin-bottom:2rem;letter-spacing:-1px">Common Questions</h3>
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.5rem">
+          <strong style="font-size:.92rem;display:block;margin-bottom:.4rem">Do you require long-term contracts?</strong>
+          <p style="color:var(--muted);font-size:.85rem;line-height:1.6">No. Monthly retainers are cancel-anytime with 30 days notice. Website packages are one-time payments with no ongoing commitment.</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.5rem">
+          <strong style="font-size:.92rem;display:block;margin-bottom:.4rem">How long does a website take to build?</strong>
+          <p style="color:var(--muted);font-size:.85rem;line-height:1.6">Starter sites take 5–7 business days. Growth takes 10–14 days. Pro custom sites take 3–4 weeks depending on scope and content readiness.</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.5rem">
+          <strong style="font-size:.92rem;display:block;margin-bottom:.4rem">Can I combine a website package with a retainer?</strong>
+          <p style="color:var(--muted);font-size:.85rem;line-height:1.6">Absolutely — and we recommend it. Clients who bundle a website build with a monthly SEO retainer see results significantly faster. Ask us about bundle discounts.</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.5rem">
+          <strong style="font-size:.92rem;display:block;margin-bottom:.4rem">Do you serve businesses outside West Covina?</strong>
+          <p style="color:var(--muted);font-size:.85rem;line-height:1.6">Yes — we work with clients across Los Angeles County, the San Gabriel Valley, and nationwide for remote digital marketing services.</p>
+        </div>
+      </div>
+    </div>
+
+  </div></section>
+
+  <div class="cstrip"><div class="wrap">
+    <h2>Not Sure Which Plan is Right?</h2>
+    <p>Book a free 30-minute consultation — we'll recommend the best fit for your budget and goals.</p>
+    <button class="btn-w" onclick="go('contact')">Book Free Consultation</button>
+  </div></div>
+
+  <footer><div class="wrap"><div class="ftop">
+    <div class="fbrand"><a class="logo" onclick="go('home')">VM<span>C</span></a><p>Smart Marketing. Sustainable Growth.</p></div>
+    <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li><li><a onclick="go('services')">Local SEO</a></li></ul></div>
+    <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('portfolio')">Portfolio</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+    <div class="fcol"><h4>Tools</h4><ul><li><a onclick="go('pricing')">Pricing</a></li><li><a onclick="go('tools')">On-Page Audit</a></li></ul></div>
+  </div><div class="fbot"><p>© 2026 Vmc Online Service · West Covina, CA</p><div class="socials"><a class="sol" title="Facebook">FB</a><a class="sol" title="Instagram">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
      CONTACT
 ═══════════════════════════════ -->
 <div id="contact" class="page">
@@ -683,6 +923,14 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
 <script>
 // ═══ EMAILJS INIT ═══
 emailjs.init('j_KkJP7QKX5nZFPrj');
+// ═══ PRICING TOGGLE ═══
+function switchPricing(type){
+  document.querySelectorAll('.prc-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.ptog-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('prc-'+type).classList.add('active');
+  document.getElementById('tog-'+type).classList.add('active');
+}
+
 // ═══ ROUTING — clean, bulletproof ═══
 function go(id){
   // hide all
