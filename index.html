@@ -1017,6 +1017,24 @@ async function submitForm(){
 }
 
 // ═══ RULE-BASED ON-PAGE SEO AUDIT (Free — No API) ═══
+// Google Sheets logging endpoint
+const AUDIT_LOG_URL = 'https://script.google.com/macros/s/AKfycbzANs2R-kUid2pIejQ6yUg0eyttRis0rXTounpxqKyb-puisCH-JsWpA6rLM0mbFy_9/exec';
+
+function logAuditQuery(url, keyword, score){
+  // Fire-and-forget — no-cors so it never blocks or errors out the UI
+  fetch(AUDIT_LOG_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type': 'text/plain'},
+    body: JSON.stringify({
+      url: url,
+      keyword: keyword,
+      score: score,
+      status: 'completed'
+    })
+  }).catch(()=>{/* silent — never disrupt user experience */});
+}
+
 function runAudit(){
   const url=document.getElementById('aurl').value.trim();
   const kw=document.getElementById('akw').value.trim();
@@ -1045,6 +1063,7 @@ function runAudit(){
   setTimeout(()=>{
     const audit = analyzeOnPage(url, kw);
     renderAudit(audit, url, kw);
+    logAuditQuery(url, kw, audit.score);
     load.classList.remove('show');
     btn.disabled=false;
   }, 1800);
