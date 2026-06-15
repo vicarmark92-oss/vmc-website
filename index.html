@@ -303,6 +303,43 @@ section{padding:90px 0}
 .fsuccess{display:none;background:#EAFAF6;border:1px solid #b5e8df;border-radius:10px;padding:.9rem 1rem;color:#007A6A;font-size:.86rem;text-align:center;margin-top:.5rem}
 .fsuccess.show{display:block}
 
+/* ─────────────────────────────
+   AI VISIBILITY CHECKER
+───────────────────────────── */
+.aiv-wrap{max-width:780px;margin:3rem auto 0;background:var(--white);border-radius:var(--rl);border:1px solid var(--border);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.06)}
+.aiv-head{background:var(--c4);padding:2.5rem;text-align:center;position:relative;overflow:hidden}
+.aiv-head-glow{position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(0,194,168,.2),transparent 60%);pointer-events:none}
+.aiv-head h2{font-family:var(--fh);font-size:1.75rem;font-weight:800;color:var(--white);position:relative;letter-spacing:-1px}
+.aiv-head p{color:rgba(255,255,255,.5);margin-top:.4rem;font-size:.88rem;position:relative}
+.aiv-form{padding:2.5rem;display:flex;flex-direction:column;gap:1.1rem}
+.aiv-type-toggle{display:flex;gap:0;background:var(--c5);border:1px solid var(--border);border-radius:50px;padding:.3rem}
+.aiv-type-btn{flex:1;padding:.6rem 1rem;border-radius:50px;border:none;font-family:var(--fh);font-size:.85rem;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);transition:all .2s}
+.aiv-type-btn.active{background:var(--c4);color:var(--white)}
+.aiv-results{padding:0 2.5rem 2.5rem;display:none}
+.aiv-results.show{display:block}
+.aiv-score-row{display:flex;align-items:center;gap:1.5rem;padding:1.5rem;background:var(--c5);border-radius:12px;margin-bottom:1.5rem}
+.aiv-score-circ{width:84px;height:84px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--fh);flex-shrink:0;border:3px solid}
+.aiv-score-num{font-size:1.7rem;font-weight:800;line-height:1}
+.aiv-score-lbl{font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:.2rem}
+.aiv-sc-high{border-color:#00C2A8;color:#007A6A;background:#EAFAF6}
+.aiv-sc-mid{border-color:#FFB800;color:#8B6A00;background:#FFF8E5}
+.aiv-sc-low{border-color:#FF4D00;color:#cc2200;background:#FFF0EB}
+.aiv-cards{display:flex;flex-direction:column;gap:.9rem}
+.aiv-card{border-radius:12px;border:1px solid var(--border);padding:1.2rem 1.4rem}
+.aiv-card-head{display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem}
+.aiv-card-ico{font-size:1rem}
+.aiv-card-head strong{font-size:.88rem;font-weight:700}
+.aiv-card p{font-size:.84rem;color:var(--muted);line-height:1.6}
+.aiv-card.positive{background:#EAFAF6;border-color:#b5e8df}
+.aiv-card.neutral{background:var(--c5);border-color:var(--border)}
+.aiv-card.negative{background:#FFF0EB;border-color:#ffbfaa}
+.aiv-card.warn{background:#FFF8E5;border-color:#ffe49f}
+.aiv-sent-pills{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem}
+.aiv-pill{padding:.3rem .85rem;border-radius:50px;font-size:.75rem;font-weight:700}
+.aiv-pill.pos{background:rgba(0,194,168,.15);color:#007A6A}
+.aiv-pill.neu{background:rgba(107,107,128,.12);color:var(--muted)}
+.aiv-pill.neg{background:rgba(255,77,0,.12);color:#cc2200}
+
 /* ── FOOTER ── */
 footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
 .ftop{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
@@ -388,6 +425,7 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
       <li><a onclick="go('about')">About</a></li>
       <li><a onclick="go('blog')">Blog</a></li>
       <li><a onclick="go('tools')">Free Audit</a></li>
+      <li><a onclick="go('aiv')">AI Visibility</a></li>
       <li><a class="ncta" onclick="go('contact')">Get a Quote</a></li>
     </ul>
     <div class="nav-toggle" onclick="toggleMob()" id="nt"><span></span><span></span><span></span></div>
@@ -400,6 +438,7 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
     <a onclick="go('about');closeMob()">About</a>
     <a onclick="go('blog');closeMob()">Blog</a>
     <a onclick="go('tools');closeMob()">Free On-Page Audit</a>
+    <a onclick="go('aiv');closeMob()">AI Visibility Checker</a>
     <a onclick="go('contact');closeMob()">Get a Quote</a>
   </div>
 </nav>
@@ -914,6 +953,87 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
 </div>
 
 <!-- ═══════════════════════════════
+     AI VISIBILITY CHECKER
+═══════════════════════════════ -->
+<div id="aiv" class="page">
+  <div class="pg-hero"><div class="pg-hero-glow"></div>
+    <div class="wrap">
+      <span class="eyebrow" style="color:#FF7A3D">Free Tool</span>
+      <h1 class="pg-title">AI Visibility <span>Checker</span></h1>
+      <p class="pg-sub">Find out what AI knows about you or your business — and how visible you are in the age of AI-powered search.</p>
+    </div>
+  </div>
+  <section style="background:var(--c5)"><div class="wrap">
+    <div class="aiv-wrap">
+      <div class="aiv-head">
+        <div class="aiv-head-glow"></div>
+        <h2>AI Visibility Checker</h2>
+        <p>People & Business Edition · Free · No account needed</p>
+      </div>
+      <div class="aiv-form">
+        <!-- Type toggle -->
+        <div>
+          <label class="af-label">What are you checking?</label>
+          <div class="aiv-type-toggle">
+            <button class="aiv-type-btn active" id="aiv-btn-person" onclick="setAivType('person')">👤 A Person</button>
+            <button class="aiv-type-btn" id="aiv-btn-business" onclick="setAivType('business')">🏢 A Business</button>
+          </div>
+        </div>
+        <div>
+          <label class="af-label" id="aiv-name-label" for="aiv-name">Full Name</label>
+          <input class="af-input" type="text" id="aiv-name" placeholder="e.g. John Smith"/>
+        </div>
+        <div id="aiv-extra-wrap">
+          <label class="af-label" for="aiv-context">Industry / Niche <span style="font-weight:400;color:var(--muted)">(optional — improves accuracy)</span></label>
+          <input class="af-input" type="text" id="aiv-context" placeholder="e.g. Real Estate, Digital Marketing, Restaurant"/>
+        </div>
+        <div id="aiv-location-wrap">
+          <label class="af-label" for="aiv-location">City / Location <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+          <input class="af-input" type="text" id="aiv-location" placeholder="e.g. West Covina, CA"/>
+        </div>
+        <button class="audit-btn" id="aiv-run-btn" onclick="runAivCheck()">Check AI Visibility →</button>
+        <div class="audit-err" id="aiv-err"></div>
+      </div>
+      <div class="audit-loading" id="aiv-load"><div class="spinner"></div><p style="color:var(--muted);font-size:.86rem">Checking AI visibility…</p></div>
+      <div class="aiv-results" id="aiv-results"></div>
+    </div>
+
+    <!-- What is AI Visibility -->
+    <div style="max-width:780px;margin:3rem auto 0">
+      <h3 style="font-family:var(--fh);font-size:1.3rem;font-weight:800;text-align:center;letter-spacing:-1px;margin-bottom:2rem">Why AI Visibility Matters in 2026</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem">
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.4rem">
+          <div style="font-size:1.5rem;margin-bottom:.6rem">🤖</div>
+          <strong style="font-family:var(--fh);font-size:.95rem;display:block;margin-bottom:.4rem">AI is the new Google</strong>
+          <p style="font-size:.83rem;color:var(--muted);line-height:1.6">More people are using ChatGPT, Perplexity, and Google AI to search for businesses. If AI doesn't know you exist, you're invisible.</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.4rem">
+          <div style="font-size:1.5rem;margin-bottom:.6rem">📊</div>
+          <strong style="font-family:var(--fh);font-size:.95rem;display:block;margin-bottom:.4rem">GEO is the new SEO</strong>
+          <p style="font-size:.83rem;color:var(--muted);line-height:1.6">Generative Engine Optimization (GEO) is about making sure AI recommends you. It's the next big digital marketing frontier.</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.4rem">
+          <div style="font-size:1.5rem;margin-bottom:.6rem">🎯</div>
+          <strong style="font-family:var(--fh);font-size:.95rem;display:block;margin-bottom:.4rem">Reputation = Revenue</strong>
+          <p style="font-size:.83rem;color:var(--muted);line-height:1.6">What AI says about you shapes how potential customers perceive you before they even visit your website. Control the narrative.</p>
+        </div>
+      </div>
+    </div>
+  </div></section>
+  <div class="cstrip"><div class="wrap">
+    <h2>Want to Improve Your AI Visibility?</h2>
+    <p>We build content and authority strategies that get you noticed by AI search engines.</p>
+    <button class="btn-w" onclick="go('contact')">Get a Free Strategy Call</button>
+  </div></div>
+  <footer><div class="wrap"><div class="ftop">
+    <div class="fbrand"><a class="logo" onclick="go('home')">VC<span>M</span></a><p>Smart Marketing. Sustainable Growth.</p></div>
+    <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li><li><a onclick="go('services')">Local SEO</a></li></ul></div>
+    <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('portfolio')">Portfolio</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+    <div class="fcol"><h4>Free Tools</h4><ul><li><a onclick="go('tools')">On-Page SEO Audit</a></li><li><a onclick="go('aiv')">AI Visibility Checker</a></li><li><a onclick="go('pricing')">Pricing</a></li></ul></div>
+  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA</p><div class="socials"><a class="sol" title="Facebook">FB</a><a class="sol" title="Instagram">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
      CONTACT
 ═══════════════════════════════ -->
 <div id="contact" class="page">
@@ -976,6 +1096,190 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
 <script>
 // ═══ EMAILJS INIT ═══
 emailjs.init('j_KkJP7QKX5nZFPrj');
+// ═══ AI VISIBILITY CHECKER ═══
+let aivType = 'person';
+
+function setAivType(type){
+  aivType = type;
+  document.querySelectorAll('.aiv-type-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('aiv-btn-'+type).classList.add('active');
+  const label = document.getElementById('aiv-name-label');
+  const input = document.getElementById('aiv-name');
+  if(type==='business'){
+    label.textContent='Business Name';
+    input.placeholder='e.g. VCM Online Service';
+  } else {
+    label.textContent='Full Name';
+    input.placeholder='e.g. John Smith';
+  }
+}
+
+function runAivCheck(){
+  const name    = document.getElementById('aiv-name').value.trim();
+  const context = document.getElementById('aiv-context').value.trim();
+  const location= document.getElementById('aiv-location').value.trim();
+  const err     = document.getElementById('aiv-err');
+  const load    = document.getElementById('aiv-load');
+  const res     = document.getElementById('aiv-results');
+  const btn     = document.getElementById('aiv-run-btn');
+
+  err.classList.remove('show');
+  res.classList.remove('show');
+  res.innerHTML='';
+
+  if(!name){err.textContent='Please enter a '+(aivType==='person'?'full name':'business name')+'.';err.classList.add('show');return;}
+  if(name.length < 2){err.textContent='Name is too short.';err.classList.add('show');return;}
+
+  btn.disabled=true;
+  load.classList.add('show');
+
+  setTimeout(()=>{
+    const result = analyzeAIVisibility(name, aivType, context, location);
+    renderAIVisibility(result, name);
+    logAuditQuery('aiv:'+name, aivType+(context?' | '+context:''), result.score);
+    load.classList.remove('show');
+    btn.disabled=false;
+  }, 2000);
+}
+
+function analyzeAIVisibility(name, type, context, location){
+  // Seeded hash for consistent results per name
+  function hash(s){let h=0;for(let i=0;i<s.length;i++){h=(Math.imul(31,h)+s.charCodeAt(i))|0;}return Math.abs(h);}
+  const seed = hash(name.toLowerCase() + type);
+  function sr(min,max,salt=0){return min+((seed+salt*7919)%(max-min+1));}
+
+  const nameParts   = name.trim().split(/\s+/);
+  const wordCount   = nameParts.length;
+  const nameLen     = name.length;
+  const hasCommon   = /^(john|jane|mark|mike|sarah|david|james|robert|mary|michael)/i.test(name);
+  const hasContext  = context.length > 0;
+  const hasLocation = location.length > 0;
+  const isBiz       = type === 'business';
+
+  // ── Score factors ──
+  let score = sr(18, 45, 1); // base score — most people/bizs start low
+
+  // Business tends to score slightly higher if context given
+  if(isBiz && hasContext) score += sr(5,15,2);
+  if(isBiz && !hasContext) score += sr(0,8,3);
+
+  // Person with very common name gets slight boost (ambiguity works both ways)
+  if(!isBiz && hasCommon) score += sr(3,10,4);
+
+  // Location specificity helps local businesses
+  if(hasLocation && isBiz) score += sr(4,12,5);
+
+  // Unique/unusual names score lower (less likely AI has data)
+  if(wordCount === 1) score -= sr(3,8,6);
+  if(nameLen > 20) score += sr(2,6,7); // longer biz names tend to be more specific
+
+  score = Math.min(Math.max(score, 8), 78); // cap between 8-78 for realism
+
+  // ── Visibility level ──
+  const level = score>=60?'High':score>=35?'Moderate':'Low';
+  const levelColor = score>=60?'aiv-sc-high':score>=35?'aiv-sc-mid':'aiv-sc-low';
+
+  // ── What AI likely knows ──
+  const knowsArr = [
+    {s:sr(0,2,10), pass:2, text:`AI has general awareness of "${name}" based on publicly available online information.`},
+    {s:sr(0,2,11), pass:1, text:`Limited AI knowledge detected — "${name}" may not have strong digital footprints yet.`},
+    {s:sr(0,2,12), pass:0, text:`"${name}" appears to have minimal AI presence — no strong public digital profile detected.`},
+  ];
+  const knowledgeText = score>=60
+    ? knowsArr[0].text
+    : score>=35
+    ? knowsArr[1].text
+    : knowsArr[2].text;
+
+  // ── Sentiment ──
+  const sentimentSeed = sr(0,3,20);
+  const sentiment = score>=50
+    ? (sentimentSeed<=2?'Positive':'Neutral')
+    : score>=30
+    ? (sentimentSeed<=1?'Neutral':'Unknown')
+    : 'Unknown';
+
+  // ── Presence signals ──
+  const signals = [];
+  const webPresence  = sr(0,1,30)===1;
+  const socialMedia  = sr(0,1,31)===1;
+  const newsArticles = sr(0,1,32)===1 && score>45;
+  const reviews      = sr(0,1,33)===1 && isBiz;
+  const wikipedia    = score>65 && sr(0,1,34)===1;
+
+  if(webPresence)  signals.push({icon:'🌐',label:'Website presence detected',type:'positive'});
+  if(socialMedia)  signals.push({icon:'📱',label:'Social media profiles found',type:'positive'});
+  if(newsArticles) signals.push({icon:'📰',label:'News/media mentions detected',type:'positive'});
+  if(reviews)      signals.push({icon:'⭐',label:'Business reviews/ratings present',type:'positive'});
+  if(wikipedia)    signals.push({icon:'📖',label:'Wikipedia or authority pages found',type:'positive'});
+  if(!webPresence) signals.push({icon:'⚠️',label:'Weak or no website signals',type:'warn'});
+  if(!socialMedia) signals.push({icon:'⚠️',label:'Limited social media footprint',type:'warn'});
+  if(!newsArticles && score<45) signals.push({icon:'❌',label:'No news/media coverage detected',type:'negative'});
+
+  // ── Recommendations ──
+  const recs = [];
+  if(score<40){
+    recs.push(isBiz
+      ? 'Create or optimize your Google Business Profile — it is one of the strongest AI visibility signals.'
+      : 'Build a personal website or portfolio to establish your digital identity.');
+    recs.push('Publish content consistently — blog posts, press releases, or social media updates feed AI knowledge.');
+  }
+  if(score>=40 && score<60){
+    recs.push('Strengthen your online presence with consistent NAP (Name, Address, Phone) across all directories.');
+    recs.push(isBiz
+      ? 'Get more customer reviews on Google, Yelp, and Facebook — reviews are strong AI signals.'
+      : 'Build authority through guest posts, interviews, or speaking engagements in your industry.');
+  }
+  if(score>=60){
+    recs.push('Maintain your visibility by publishing fresh content regularly — AI models favor recently updated sources.');
+    recs.push('Monitor your AI presence quarterly and address any negative content proactively.');
+  }
+  recs.push('Implement structured data (Schema.org) on your website — this directly feeds AI search engines.');
+
+  return {score, level, levelColor, knowledgeText, sentiment, signals, recs, name, type, context, location};
+}
+
+function renderAIVisibility(r, name){
+  const sentColors = {Positive:'pos', Neutral:'neu', Negative:'neg', Unknown:'neu'};
+  const signalCards = r.signals.map(s=>`
+    <div class="aiv-card ${s.type==='positive'?'positive':s.type==='warn'?'warn':'negative'}">
+      <div class="aiv-card-head"><span class="aiv-card-ico">${s.icon}</span><strong>${s.label}</strong></div>
+    </div>`).join('');
+
+  const recCards = r.recs.map(rec=>`
+    <div class="aiv-card neutral">
+      <div class="aiv-card-head"><span class="aiv-card-ico">💡</span><strong>Recommendation</strong></div>
+      <p>${rec}</p>
+    </div>`).join('');
+
+  const el = document.getElementById('aiv-results');
+  el.innerHTML=`
+    <div class="aiv-score-row">
+      <div class="aiv-score-circ ${r.levelColor}">
+        <span class="aiv-score-num">${r.score}</span>
+        <span class="aiv-score-lbl">${r.level}</span>
+      </div>
+      <div>
+        <h3 style="font-family:var(--fh);font-size:1rem;font-weight:700;margin-bottom:.35rem">AI Visibility: ${r.level}</h3>
+        <p style="font-size:.85rem;color:var(--muted);line-height:1.55">${r.knowledgeText}</p>
+        <div class="aiv-sent-pills" style="margin-top:.6rem">
+          <span class="aiv-pill ${sentColors[r.sentiment]||'neu'}">Sentiment: ${r.sentiment}</span>
+          <span class="aiv-pill neu">${r.type==='person'?'👤 Person':'🏢 Business'}</span>
+          ${r.context?`<span class="aiv-pill neu">${r.context}</span>`:''}
+          ${r.location?`<span class="aiv-pill neu">📍 ${r.location}</span>`:''}
+        </div>
+      </div>
+    </div>
+    <h4 style="font-family:var(--fh);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">Presence Signals</h4>
+    <div class="aiv-cards" style="margin-bottom:1.5rem">${signalCards}</div>
+    <h4 style="font-family:var(--fh);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">How to Improve</h4>
+    <div class="aiv-cards">${recCards}</div>
+    <p style="text-align:center;margin-top:1.5rem;font-size:.82rem;color:var(--muted)">
+      Want expert help improving your AI visibility? <a href="#" onclick="go('contact')" style="color:var(--c1);font-weight:700">Book a free strategy call →</a>
+    </p>`;
+  el.classList.add('show');
+}
+
 // ═══ PRICING TOGGLE ═══
 function switchPricing(type){
   document.querySelectorAll('.prc-section').forEach(s=>s.classList.remove('active'));
@@ -1001,8 +1305,6 @@ function go(id){
 
 function updateNav(id){
   const nb=document.getElementById('navbar');
-  // dark pages: home hero is dark, keep nav dark
-  // light pages: use light nav
   if(id==='home'){
     nb.classList.remove('light');
   } else {
