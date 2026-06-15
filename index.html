@@ -1308,7 +1308,76 @@ function analyzeAIVisibility(name, type, context, location){
   }
   recs.push('Add structured data (Schema.org) to your website — this directly signals AI search engines like Google AI Overview.');
 
-  return {score,level,levelColor,sentiment,overviewIntro,bullets,sources,metrics,metricLabels,signals,recs,name,type,context,location};
+  // ── AI-Associated Keywords Database ──
+  const keywordDB = {
+    // People
+    'elon musk':       ['entrepreneur','billionaire','Tesla','SpaceX','X / Twitter','innovation','electric vehicles','space exploration','AI','disruptor'],
+    'elon':            ['entrepreneur','billionaire','Tesla','SpaceX','innovation','disruptor'],
+    'oprah winfrey':   ['media mogul','philanthropist','talk show','OWN Network','author','empowerment','influence'],
+    'bill gates':      ['Microsoft','philanthropy','software','technology','global health','investor','author'],
+    'jeff bezos':      ['Amazon','e-commerce','Blue Origin','space','entrepreneur','logistics','media'],
+    'mark zuckerberg': ['Meta','Facebook','social media','privacy','metaverse','tech CEO','connectivity'],
+    'tim cook':        ['Apple','CEO','supply chain','innovation','privacy','leadership','sustainability'],
+    'sundar pichai':   ['Google','Alphabet','search engine','AI','Android','technology','leadership'],
+    'warren buffett':  ['investment','Berkshire Hathaway','value investing','stocks','finance','philanthropy'],
+    'taylor swift':    ['pop music','songwriter','albums','Eras Tour','entertainment','record-breaking','artist'],
+    'beyonce':         ['R&B','pop music','entertainer','actress','fashion','empowerment','Grammy'],
+    'cristiano ronaldo':['football','soccer','CR7','athlete','fitness','brand','social media'],
+    'lionel messi':    ['football','soccer','Argentina','World Cup','GOAT','athlete','Inter Miami'],
+    'neil patel':      ['SEO','digital marketing','content marketing','analytics','entrepreneur','blogging','growth hacking'],
+    'gary vaynerchuk': ['entrepreneurship','social media','VaynerMedia','marketing','wine','NFTs','hustle culture'],
+    'gary vee':        ['entrepreneurship','social media','VaynerMedia','marketing','hustle'],
+    'seth godin':      ['marketing','author','blogging','permission marketing','tribes','Purple Cow'],
+    'rand fishkin':    ['SEO','Moz','SparkToro','digital marketing','transparency'],
+    'brian dean':      ['SEO','backlinko','link building','content marketing','search rankings'],
+    // Businesses
+    'apple':           ['iPhone','Mac','innovation','design','premium','ecosystem','Tim Cook','App Store'],
+    'google':          ['search engine','advertising','Android','AI','YouTube','cloud','Alphabet'],
+    'microsoft':       ['Windows','Office','Azure','cloud','gaming','AI','LinkedIn','Satya Nadella'],
+    'amazon':          ['e-commerce','AWS','Prime','logistics','marketplace','Jeff Bezos','cloud'],
+    'meta':            ['Facebook','Instagram','WhatsApp','metaverse','social media','advertising','VR'],
+    'tesla':           ['electric vehicles','EV','Elon Musk','autopilot','energy','innovation','stock'],
+    'netflix':         ['streaming','entertainment','original content','subscriptions','binge-watching'],
+    'nike':            ['sportswear','athletics','Just Do It','shoes','performance','branding'],
+    'hubspot':         ['CRM','inbound marketing','sales','email marketing','automation','SaaS'],
+    'shopify':         ['e-commerce','merchants','online store','payments','SaaS','entrepreneurship'],
+    'canva':           ['design','templates','graphics','marketing','presentations','easy-to-use'],
+    'openai':          ['ChatGPT','AI','GPT','machine learning','Sam Altman','language models'],
+    'chatgpt':         ['AI','conversational AI','OpenAI','language model','productivity','writing'],
+    'anthropic':       ['Claude','AI safety','language models','research','responsible AI'],
+    'airbnb':          ['travel','accommodation','short-term rental','hosts','experiences','sharing economy'],
+    'uber':            ['ride-sharing','delivery','gig economy','transportation','Uber Eats','global'],
+  };
+
+  // Get keywords for this name
+  let aiKeywords = keywordDB[nameLow] || [];
+
+  // If not in DB, generate context-based keywords
+  if(aiKeywords.length===0){
+    if(hasContext){
+      const ctxWords = context.toLowerCase();
+      if(ctxWords.includes('real estate')) aiKeywords=['real estate','property','agent','listings','buyer','seller','investment','homes'];
+      else if(ctxWords.includes('seo')||ctxWords.includes('digital marketing')) aiKeywords=['SEO','digital marketing','online visibility','search rankings','content','analytics'];
+      else if(ctxWords.includes('restaurant')||ctxWords.includes('food')) aiKeywords=['dining','cuisine','local restaurant','food','menu','chef','hospitality'];
+      else if(ctxWords.includes('law')||ctxWords.includes('legal')) aiKeywords=['attorney','legal services','law firm','counsel','litigation','compliance'];
+      else if(ctxWords.includes('health')||ctxWords.includes('medical')) aiKeywords=['healthcare','wellness','medical','patient care','clinic','health services'];
+      else if(ctxWords.includes('tech')||ctxWords.includes('software')) aiKeywords=['technology','software','developer','innovation','digital','solutions'];
+      else if(ctxWords.includes('finance')||ctxWords.includes('accounting')) aiKeywords=['finance','investment','accounting','wealth management','financial planning'];
+      else if(ctxWords.includes('fitness')||ctxWords.includes('gym')) aiKeywords=['fitness','gym','health','training','wellness','nutrition','lifestyle'];
+      else aiKeywords=[context,'professional','services','local business','online presence'];
+    } else if(score>=70){
+      aiKeywords=['industry leader','professional','established','recognized','online presence','authority'];
+    } else if(score>=40){
+      aiKeywords=['professional','developing presence','growing brand','online identity'];
+    } else {
+      aiKeywords=['limited online presence','low AI visibility','building digital identity'];
+    }
+  }
+
+  // Trim to max 8 keywords
+  aiKeywords = aiKeywords.slice(0,8);
+
+  return {score,level,levelColor,sentiment,overviewIntro,bullets,sources,metrics,metricLabels,signals,recs,aiKeywords,name,type,context,location};
 }
 
 
@@ -1389,6 +1458,21 @@ function renderAIVisibility(r){
 
     <h4 style="font-family:var(--fh);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:.8rem 0">AI Profile Breakdown</h4>
     <div class="aiv-cards" style="margin-bottom:1.5rem">${metricsHTML}</div>
+
+    <h4 style="font-family:var(--fh);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">Keywords AI Associates With This Name</h4>
+    <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem">
+      ${r.aiKeywords.map(k=>`<span style="background:var(--c4);color:rgba(255,255,255,.85);font-size:.78rem;font-weight:600;padding:.35rem .9rem;border-radius:50px;letter-spacing:.02em">${k}</span>`).join('')}
+    </div>
+
+    <!-- Not who I am disclaimer -->
+    <div style="background:#FFF8E5;border:1px solid #ffe49f;border-radius:12px;padding:1.2rem 1.4rem;margin-bottom:1.5rem;display:flex;gap:.9rem;align-items:flex-start">
+      <span style="font-size:1.2rem;flex-shrink:0">🤔</span>
+      <div>
+        <strong style="font-family:var(--fh);font-size:.9rem;font-weight:700;display:block;margin-bottom:.3rem">Not who you are? That's actually the problem.</strong>
+        <p style="font-size:.83rem;color:#5a4a00;line-height:1.6">If this AI profile doesn't reflect you accurately, it means AI doesn't have enough correct information about you yet. This is exactly what <strong>AI Visibility Optimization</strong> fixes — we help you build the right digital footprint so AI describes you the way you want to be described.</p>
+        <a href="#" onclick="go('contact')" style="display:inline-block;margin-top:.7rem;background:var(--c1);color:#fff;font-size:.8rem;font-weight:700;padding:.4rem 1rem;border-radius:50px;text-decoration:none">Fix My AI Profile →</a>
+      </div>
+    </div>
 
     <h4 style="font-family:var(--fh);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">Presence Signals</h4>
     <div class="aiv-cards" style="margin-bottom:1.5rem">${signalHTML}</div>
