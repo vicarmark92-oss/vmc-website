@@ -1147,124 +1147,170 @@ function analyzeAIVisibility(name, type, context, location){
   const seed = hash(name.toLowerCase()+type);
   function sr(min,max,salt=0){return min+((seed+salt*7919)%(max-min+1));}
 
+  const nameLow    = name.toLowerCase().trim();
   const nameParts  = name.trim().split(/\s+/);
   const wordCount  = nameParts.length;
-  const nameLen    = name.length;
-  const hasCommon  = /^(john|jane|mark|mike|sarah|david|james|robert|mary|michael)/i.test(name);
   const hasContext = context.length>0;
   const hasLoc     = location.length>0;
   const isBiz      = type==='business';
 
-  // ── Overall score ──
-  let score = sr(18,45,1);
-  if(isBiz && hasContext) score+=sr(5,15,2);
-  if(isBiz && !hasContext) score+=sr(0,8,3);
-  if(!isBiz && hasCommon) score+=sr(3,10,4);
-  if(hasLoc && isBiz) score+=sr(4,12,5);
-  if(wordCount===1) score-=sr(3,8,6);
-  if(nameLen>20) score+=sr(2,6,7);
-  score=Math.min(Math.max(score,8),78);
+  // ── TIER 1: Global icons — 88-97 ──
+  const tier1 = [
+    'elon musk','oprah winfrey','bill gates','jeff bezos','mark zuckerberg',
+    'tim cook','sundar pichai','warren buffett','steve jobs','donald trump',
+    'joe biden','taylor swift','beyonce','cristiano ronaldo','lionel messi',
+    'apple','google','microsoft','amazon','meta','tesla','netflix','nike',
+    'coca cola','mcdonalds',"mcdonald's",'samsung','toyota','facebook',
+    'barack obama','kim kardashian','lebron james','michael jordan',
+    'elon','oprah','bezos','zuckerberg','gates','trump','biden'
+  ];
 
-  const level      = score>=60?'High':score>=35?'Moderate':'Low';
-  const levelColor = score>=60?'aiv-sc-high':score>=35?'aiv-sc-mid':'aiv-sc-low';
+  // ── TIER 2: Industry leaders — 75-87 ──
+  const tier2 = [
+    'neil patel','gary vaynerchuk','gary vee','seth godin','hubspot',
+    'moz','semrush','ahrefs','mailchimp','shopify','stripe','airbnb','uber',
+    'spotify','twitter','x corp','tiktok','linkedin','youtube','instagram',
+    'rand fishkin','brian dean','backlinko','buffer','hootsuite',
+    'anthropic','openai','chatgpt','gemini','perplexity','midjourney',
+    'canva','figma','notion','slack','zoom','squarespace','wix','wordpress',
+    'yelp','tripadvisor','trustpilot','forbes','bloomberg','techcrunch'
+  ];
 
-  // ── Sentiment ──
-  const sentSeed  = sr(0,3,20);
-  const sentiment = score>=50?(sentSeed<=2?'Positive':'Neutral'):score>=30?(sentSeed<=1?'Neutral':'Unknown'):'Unknown';
+  // ── TIER 3: Known brands — 60-74 ──
+  const tier3 = [
+    'wordstream','sprout social','godaddy','namecheap','cloudflare',
+    'semrush','screaming frog','yoast','rankmath','clearscope',
+    'buzzsumo','similarweb','woocommerce','bigcommerce','klaviyo',
+    'activecampaign','convertkit','aweber','constant contact'
+  ];
 
-  // ── 5 AI Profile Metrics ──
-  // 1. AI Search Appearance
-  const aiAppearScore = sr(0,2,40);
-  const aiAppear = score>=60?{label:'Likely',cls:'positive',ico:'✅',detail:`"${name}" would likely appear when someone asks AI "Who is ${name}?" — AI has enough data to generate a response.`}
-    :score>=35?{label:'Uncertain',cls:'warn',ico:'⚠️',detail:`"${name}" may appear in some AI tools but not others. More online presence is needed for consistent AI recognition.`}
-    :{label:'Unlikely',cls:'negative',ico:'❌',detail:`"${name}" is unlikely to appear in AI search results. Little to no public data exists for AI models to reference.`};
+  // ── Check tiers ──
+  let baseScore = 0;
 
-  // 2. Content Footprint
-  const contentScore = sr(0,2,41);
-  const contentFoot = score>=60?{label:'Strong',cls:'positive',ico:'📰',detail:`Moderate-to-strong written content footprint detected. Articles, profiles, or mentions about "${name}" likely exist across multiple sources.`}
-    :score>=35?{label:'Moderate',cls:'warn',ico:'📄',detail:`Some content exists about "${name}" but it is limited. More consistent publishing across platforms would improve AI knowledge.`}
-    :{label:'Weak',cls:'negative',ico:'📭',detail:`Very little written content about "${name}" found online. AI models have minimal data to draw from when referencing this ${isBiz?'business':'person'}.`};
-
-  // 3. Authority Score
-  const authSeed = sr(0,2,42);
-  const authority = score>=60?{label:'High',cls:'positive',ico:'🏛️',detail:`"${name}" shows signals of authority — likely referenced by credible sources, directories, or industry publications that AI models trust.`}
-    :score>=35?{label:'Medium',cls:'warn',ico:'🏗️',detail:`Some authority signals present but not strong enough to consistently influence AI outputs. Focus on getting featured in industry publications.`}
-    :{label:'Low',cls:'negative',ico:'🏚️',detail:`Weak authority signals detected. AI models prioritize authoritative sources — getting listed in directories, news sites, and niche platforms will help significantly.`};
-
-  // 4. AI Consistency
-  const consSeed = sr(0,2,43);
-  const consistency = score>=60?{label:'Consistent',cls:'positive',ico:'🔄',detail:`Different AI tools (ChatGPT, Gemini, Perplexity) would likely give similar descriptions of "${name}" — a sign of strong, consistent online presence.`}
-    :score>=35?{label:'Mixed',cls:'warn',ico:'🔀',detail:`AI tools may give different or incomplete descriptions of "${name}". Inconsistent online presence leads to inconsistent AI outputs.`}
-    :{label:'Unpredictable',cls:'negative',ico:'❓',detail:`AI tools would give very different or no information about "${name}". Without a clear, consistent online identity, AI cannot build a reliable profile.`};
-
-  // 5. Reputation Risk
-  const riskSeed = sr(0,2,44);
-  const repRisk = score>=55?{label:'Low Risk',cls:'positive',ico:'🛡️',detail:`No significant reputation risk signals detected for "${name}". AI is unlikely to surface negative content about this ${isBiz?'business':'person'}.`}
-    :score>=30?{label:'Medium Risk',cls:'warn',ico:'⚠️',detail:`Some ambiguity detected. Without a strong positive presence, AI may fill gaps with neutral or mixed information about "${name}".`}
-    :{label:'High Risk',cls:'negative',ico:'🚨',detail:`Low visibility creates high risk — when AI has little data, it may generate inaccurate or generic descriptions that could misrepresent "${name}".`};
-
-  const metrics = [aiAppear, contentFoot, authority, consistency, repRisk];
-  const metricLabels = ['AI Search Appearance','Content Footprint','Authority Score','AI Consistency','Reputation Risk'];
-
-  // ── Google-style AI Overview card ──
-  const profession  = hasContext ? context : (isBiz?'business':'professional');
-  const locStr      = hasLoc ? ` based in ${location}` : '';
-  const contextStr  = hasContext ? ` in the ${context} industry` : '';
-  const firstName   = nameParts[0];
-
-  const overviewIntro = score>=60
-    ? `${name} is a ${profession}${locStr}${contextStr}. ${isBiz?'The business has':'They have'} an established online presence with multiple AI-readable sources available across the web.`
-    : score>=35
-    ? `${name} is ${isBiz?'a business':'a professional'}${locStr}${contextStr ? ' in '+context:''} with a developing online presence. Some AI tools may recognize this ${isBiz?'brand':'name'}, though visibility varies across platforms.`
-    : `Limited information about ${name} is currently available to AI systems. ${isBiz?'This business':'This person'} has minimal publicly indexed content that AI models can reference.`;
-
-  const bullets = [];
-  if(isBiz){
-    bullets.push({icon:'🏢', label:'Business Type', val: hasContext?context:'Digital / Online Business'});
-    bullets.push({icon:'📍', label:'Location', val: hasLoc?location:'Not publicly specified'});
-    bullets.push({icon:'🌐', label:'Online Presence', val: score>=60?'Established — multiple platforms':'Limited — few indexed sources'});
-    bullets.push({icon:'⭐', label:'AI Recognition', val: aiAppear.label+' to appear in AI responses'});
+  if(tier1.some(t=>nameLow===t||nameLow.includes(t)||(t.includes(nameLow)&&nameLow.length>4))){
+    baseScore = 88 + sr(0,9,99);
+  } else if(tier2.some(t=>nameLow===t||nameLow.includes(t)||(t.includes(nameLow)&&nameLow.length>5))){
+    baseScore = 75 + sr(0,12,98);
+  } else if(tier3.some(t=>nameLow===t||nameLow.includes(t))){
+    baseScore = 60 + sr(0,14,97);
   } else {
-    bullets.push({icon:'👤', label:'Profile Type', val: hasContext?context+' Professional':'Individual / Professional'});
-    bullets.push({icon:'📍', label:'Location', val: hasLoc?location:'Not publicly specified'});
-    bullets.push({icon:'📰', label:'Media Presence', val: contentFoot.label+' content footprint'});
-    bullets.push({icon:'🏛️', label:'Authority', val: authority.label+' authority in online sources'});
+    // Unknown — start at realistic base
+    baseScore = sr(22, 45, 1);
+    // More info = higher score
+    if(hasContext && hasLoc) baseScore += sr(14,24,2);
+    else if(hasContext)      baseScore += sr(8,16,3);
+    else if(hasLoc)          baseScore += sr(5,12,4);
+    // Business with context
+    if(isBiz && hasContext)  baseScore += sr(6,14,5);
+    // Full name specificity
+    if(wordCount>=2)         baseScore += sr(4,10,6);
+    if(wordCount>=3)         baseScore += sr(3,7,7);
+    // Cap unknowns at 68
+    baseScore = Math.min(baseScore, 68);
   }
 
-  // Sources (simulated)
-  const sources = score>=60
-    ? ['LinkedIn','Google Business','Industry Directory','News Mentions']
-    : score>=35
-    ? ['LinkedIn','Basic Web Presence']
-    : ['No significant sources found'];
+  const score      = Math.min(Math.max(Math.round(baseScore), 8), 97);
+  const level      = score>=70?'High':score>=40?'Moderate':'Low';
+  const levelColor = score>=70?'aiv-sc-high':score>=40?'aiv-sc-mid':'aiv-sc-low';
 
-  // ── Presence signals ──
-  const signals = [];
-  if(sr(0,1,30)===1) signals.push({icon:'🌐',label:'Website presence detected',type:'positive'});
-  if(sr(0,1,31)===1) signals.push({icon:'📱',label:'Social media profiles found',type:'positive'});
-  if(sr(0,1,32)===1&&score>45) signals.push({icon:'📰',label:'News/media mentions detected',type:'positive'});
-  if(sr(0,1,33)===1&&isBiz) signals.push({icon:'⭐',label:'Business reviews/ratings present',type:'positive'});
-  if(score>65&&sr(0,1,34)===1) signals.push({icon:'📖',label:'Authority pages found',type:'positive'});
-  if(sr(0,1,30)===0) signals.push({icon:'⚠️',label:'Weak or no website signals',type:'warn'});
-  if(sr(0,1,31)===0) signals.push({icon:'⚠️',label:'Limited social media footprint',type:'warn'});
-  if(score<45) signals.push({icon:'❌',label:'No news/media coverage detected',type:'negative'});
+  // ── Sentiment ──
+  const sentiment  = score>=75?'Positive':score>=45?(sr(0,1,20)===1?'Positive':'Neutral'):(sr(0,1,21)===1?'Neutral':'Unknown');
+
+  // ── 5 AI Profile Metrics ──
+  const aiAppear = score>=70
+    ?{label:'Likely',cls:'positive',ico:'✅',detail:`"${name}" would confidently appear when someone asks AI about them. Multiple AI systems have sufficient data to generate accurate, detailed responses.`}
+    :score>=40
+    ?{label:'Uncertain',cls:'warn',ico:'⚠️',detail:`"${name}" may appear in some AI tools but not consistently. More online presence would improve recognition across platforms.`}
+    :{label:'Unlikely',cls:'negative',ico:'❌',detail:`"${name}" is unlikely to appear in AI search results. Little to no public data exists for AI models to reference.`};
+
+  const contentFoot = score>=70
+    ?{label:'Strong',cls:'positive',ico:'📰',detail:`Strong content footprint detected. Articles, profiles, and mentions about "${name}" exist across multiple authoritative sources.`}
+    :score>=40
+    ?{label:'Moderate',cls:'warn',ico:'📄',detail:`Some content exists about "${name}" but coverage is inconsistent. More publishing across platforms would strengthen AI knowledge.`}
+    :{label:'Weak',cls:'negative',ico:'📭',detail:`Very little written content about "${name}" found. AI models have minimal data to draw from when asked about this ${isBiz?'business':'person'}.`};
+
+  const authority = score>=70
+    ?{label:'High',cls:'positive',ico:'🏛️',detail:`"${name}" is referenced by highly credible, authoritative sources that AI models trust — news sites, publications, and major directories.`}
+    :score>=40
+    ?{label:'Medium',cls:'warn',ico:'🏗️',detail:`Some authority signals present but not strong enough for consistent AI influence. Getting featured in industry publications would help.`}
+    :{label:'Low',cls:'negative',ico:'🏚️',detail:`Weak authority signals detected. Focus on getting listed in directories, earning press mentions, and building platform presence.`};
+
+  const consistency = score>=70
+    ?{label:'Consistent',cls:'positive',ico:'🔄',detail:`ChatGPT, Gemini, and Perplexity would give similar, accurate descriptions of "${name}" — a sign of strong, well-indexed online presence.`}
+    :score>=40
+    ?{label:'Mixed',cls:'warn',ico:'🔀',detail:`AI tools may give different or incomplete descriptions of "${name}". A more consistent digital identity will unify AI outputs.`}
+    :{label:'Unpredictable',cls:'negative',ico:'❓',detail:`AI tools would give very different or no information about "${name}". A clear, consistent online identity is needed.`};
+
+  const repRisk = score>=70
+    ?{label:'Low Risk',cls:'positive',ico:'🛡️',detail:`Strong positive presence means AI is unlikely to surface inaccurate content about "${name}". Reputation is well-protected.`}
+    :score>=40
+    ?{label:'Medium Risk',cls:'warn',ico:'⚠️',detail:`Without a dominant positive presence, AI may fill gaps with neutral or mixed information about "${name}".`}
+    :{label:'High Risk',cls:'negative',ico:'🚨',detail:`Low visibility creates high risk — AI may generate inaccurate descriptions that misrepresent "${name}".`};
+
+  const metrics      = [aiAppear, contentFoot, authority, consistency, repRisk];
+  const metricLabels = ['AI Search Appearance','Content Footprint','Authority Score','AI Consistency','Reputation Risk'];
+
+  // ── Google-style overview ──
+  const profession = hasContext?context:(isBiz?'business':'professional');
+  const locStr     = hasLoc?` based in ${location}`:'';
+  const ctxStr     = hasContext?` in the ${context} space`:'';
+
+  const overviewIntro = score>=88
+    ?`${name} is one of the most recognized ${isBiz?'brands':'figures'} globally${locStr}. AI systems across all major platforms have extensive, well-documented knowledge about ${isBiz?'this company':'them'}, drawing from thousands of authoritative sources including news media, Wikipedia, and industry publications.`
+    :score>=70
+    ?`${name} is a well-known ${profession}${locStr}${ctxStr}. ${isBiz?'The business has':'They have'} a strong online presence with multiple AI-readable sources, making ${isBiz?'it':'them'} consistently recognizable across major AI platforms.`
+    :score>=40
+    ?`${name} is a ${profession}${locStr}${ctxStr} with a developing online presence. Some AI tools may recognize this ${isBiz?'brand':'name'}, though visibility varies. Building more consistent digital assets would improve AI recognition significantly.`
+    :`Limited information about ${name} is currently available to AI systems. ${isBiz?'This business':'This person'} has minimal publicly indexed content — a common situation for newer or local-focused ${isBiz?'businesses':'professionals'}.`;
+
+  const bullets = isBiz ? [
+    {icon:'🏢',label:'Business Type',   val:hasContext?context:'Digital / Online Business'},
+    {icon:'📍',label:'Location',        val:hasLoc?location:(score>=75?'Publicly documented':'Not publicly specified')},
+    {icon:'🌐',label:'Online Presence', val:score>=70?'Established — indexed on multiple platforms':score>=40?'Developing — limited coverage':'Minimal — few indexed sources'},
+    {icon:'⭐',label:'AI Recognition',  val:aiAppear.label+' to appear in AI responses'},
+  ]:[
+    {icon:'👤',label:'Profile Type',   val:hasContext?context+' Professional':'Individual / Professional'},
+    {icon:'📍',label:'Location',       val:hasLoc?location:(score>=75?'Publicly documented':'Not publicly specified')},
+    {icon:'📰',label:'Media Presence', val:contentFoot.label+' content footprint'},
+    {icon:'🏛️',label:'Authority',      val:authority.label+' authority in online sources'},
+  ];
+
+  const sources = score>=88
+    ?['Wikipedia','News Media','LinkedIn','Twitter/X','Industry Publications','Forbes/Bloomberg']
+    :score>=70
+    ?['LinkedIn','Industry Directory','News Mentions','Google Business']
+    :score>=40
+    ?['LinkedIn','Basic Web Presence','Local Directories']
+    :['No significant sources found'];
+
+  // ── Signals ──
+  const signals=[];
+  if(score>=40||sr(0,1,30)===1) signals.push({icon:'🌐',label:'Website presence detected',type:'positive'});
+  if(score>=50||sr(0,1,31)===1) signals.push({icon:'📱',label:'Social media profiles found',type:'positive'});
+  if(score>=70)                  signals.push({icon:'📰',label:'News/media mentions detected',type:'positive'});
+  if(score>=80)                  signals.push({icon:'📖',label:'Wikipedia or authority pages found',type:'positive'});
+  if(score>=60&&isBiz)           signals.push({icon:'⭐',label:'Business reviews/ratings present',type:'positive'});
+  if(score<40&&sr(0,1,30)===0)   signals.push({icon:'⚠️',label:'Weak or no website signals',type:'warn'});
+  if(score<50&&sr(0,1,31)===0)   signals.push({icon:'⚠️',label:'Limited social media footprint',type:'warn'});
+  if(score<40)                   signals.push({icon:'❌',label:'No news/media coverage detected',type:'negative'});
 
   // ── Recommendations ──
   const recs=[];
   if(score<40){
-    recs.push(isBiz?'Create or optimize your Google Business Profile — it is one of the strongest AI visibility signals.':'Build a personal website or portfolio to establish your digital identity.');
-    recs.push('Publish content consistently — blog posts, press releases, or social media updates feed AI knowledge bases.');
-  } else if(score<60){
+    recs.push(isBiz?'Create or optimize your Google Business Profile — one of the strongest AI visibility signals.':'Build a personal website or portfolio to establish your digital identity.');
+    recs.push('Publish content consistently — blog posts, press releases, and social updates feed AI knowledge bases.');
+  } else if(score<70){
     recs.push('Strengthen your online presence with consistent NAP (Name, Address, Phone) across all directories.');
     recs.push(isBiz?'Get more customer reviews on Google, Yelp, and Facebook — reviews are strong AI training signals.':'Build authority through guest posts, interviews, or speaking engagements in your niche.');
   } else {
     recs.push('Maintain visibility by publishing fresh content regularly — AI models favor recently updated sources.');
-    recs.push('Monitor your AI presence quarterly and address any negative content proactively.');
+    recs.push('Monitor your AI presence quarterly and address any inaccurate content proactively.');
   }
   recs.push('Add structured data (Schema.org) to your website — this directly signals AI search engines like Google AI Overview.');
 
   return {score,level,levelColor,sentiment,overviewIntro,bullets,sources,metrics,metricLabels,signals,recs,name,type,context,location};
 }
+
 
 function renderAIVisibility(r){
   const sentColors={Positive:'pos',Neutral:'neu',Negative:'neg',Unknown:'neu'};
