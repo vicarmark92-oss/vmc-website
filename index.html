@@ -1135,7 +1135,7 @@ function runAivCheck(){
 
   setTimeout(()=>{
     const result = analyzeAIVisibility(name, aivType, context, location);
-    renderAIVisibility(result, name);
+    renderAIVisibility(result);
     logAuditQuery('aiv:'+name, aivType+(context?' | '+context:''), result.score);
     load.classList.remove('show');
     btn.disabled=false;
@@ -1143,116 +1143,183 @@ function runAivCheck(){
 }
 
 function analyzeAIVisibility(name, type, context, location){
-  // Seeded hash for consistent results per name
   function hash(s){let h=0;for(let i=0;i<s.length;i++){h=(Math.imul(31,h)+s.charCodeAt(i))|0;}return Math.abs(h);}
-  const seed = hash(name.toLowerCase() + type);
+  const seed = hash(name.toLowerCase()+type);
   function sr(min,max,salt=0){return min+((seed+salt*7919)%(max-min+1));}
 
-  const nameParts   = name.trim().split(/\s+/);
-  const wordCount   = nameParts.length;
-  const nameLen     = name.length;
-  const hasCommon   = /^(john|jane|mark|mike|sarah|david|james|robert|mary|michael)/i.test(name);
-  const hasContext  = context.length > 0;
-  const hasLocation = location.length > 0;
-  const isBiz       = type === 'business';
+  const nameParts  = name.trim().split(/\s+/);
+  const wordCount  = nameParts.length;
+  const nameLen    = name.length;
+  const hasCommon  = /^(john|jane|mark|mike|sarah|david|james|robert|mary|michael)/i.test(name);
+  const hasContext = context.length>0;
+  const hasLoc     = location.length>0;
+  const isBiz      = type==='business';
 
-  // ── Score factors ──
-  let score = sr(18, 45, 1); // base score — most people/bizs start low
+  // ── Overall score ──
+  let score = sr(18,45,1);
+  if(isBiz && hasContext) score+=sr(5,15,2);
+  if(isBiz && !hasContext) score+=sr(0,8,3);
+  if(!isBiz && hasCommon) score+=sr(3,10,4);
+  if(hasLoc && isBiz) score+=sr(4,12,5);
+  if(wordCount===1) score-=sr(3,8,6);
+  if(nameLen>20) score+=sr(2,6,7);
+  score=Math.min(Math.max(score,8),78);
 
-  // Business tends to score slightly higher if context given
-  if(isBiz && hasContext) score += sr(5,15,2);
-  if(isBiz && !hasContext) score += sr(0,8,3);
-
-  // Person with very common name gets slight boost (ambiguity works both ways)
-  if(!isBiz && hasCommon) score += sr(3,10,4);
-
-  // Location specificity helps local businesses
-  if(hasLocation && isBiz) score += sr(4,12,5);
-
-  // Unique/unusual names score lower (less likely AI has data)
-  if(wordCount === 1) score -= sr(3,8,6);
-  if(nameLen > 20) score += sr(2,6,7); // longer biz names tend to be more specific
-
-  score = Math.min(Math.max(score, 8), 78); // cap between 8-78 for realism
-
-  // ── Visibility level ──
-  const level = score>=60?'High':score>=35?'Moderate':'Low';
+  const level      = score>=60?'High':score>=35?'Moderate':'Low';
   const levelColor = score>=60?'aiv-sc-high':score>=35?'aiv-sc-mid':'aiv-sc-low';
 
-  // ── What AI likely knows ──
-  const knowsArr = [
-    {s:sr(0,2,10), pass:2, text:`AI has general awareness of "${name}" based on publicly available online information.`},
-    {s:sr(0,2,11), pass:1, text:`Limited AI knowledge detected — "${name}" may not have strong digital footprints yet.`},
-    {s:sr(0,2,12), pass:0, text:`"${name}" appears to have minimal AI presence — no strong public digital profile detected.`},
-  ];
-  const knowledgeText = score>=60
-    ? knowsArr[0].text
-    : score>=35
-    ? knowsArr[1].text
-    : knowsArr[2].text;
-
   // ── Sentiment ──
-  const sentimentSeed = sr(0,3,20);
-  const sentiment = score>=50
-    ? (sentimentSeed<=2?'Positive':'Neutral')
-    : score>=30
-    ? (sentimentSeed<=1?'Neutral':'Unknown')
-    : 'Unknown';
+  const sentSeed  = sr(0,3,20);
+  const sentiment = score>=50?(sentSeed<=2?'Positive':'Neutral'):score>=30?(sentSeed<=1?'Neutral':'Unknown'):'Unknown';
+
+  // ── 5 AI Profile Metrics ──
+  // 1. AI Search Appearance
+  const aiAppearScore = sr(0,2,40);
+  const aiAppear = score>=60?{label:'Likely',cls:'positive',ico:'✅',detail:`"${name}" would likely appear when someone asks AI "Who is ${name}?" — AI has enough data to generate a response.`}
+    :score>=35?{label:'Uncertain',cls:'warn',ico:'⚠️',detail:`"${name}" may appear in some AI tools but not others. More online presence is needed for consistent AI recognition.`}
+    :{label:'Unlikely',cls:'negative',ico:'❌',detail:`"${name}" is unlikely to appear in AI search results. Little to no public data exists for AI models to reference.`};
+
+  // 2. Content Footprint
+  const contentScore = sr(0,2,41);
+  const contentFoot = score>=60?{label:'Strong',cls:'positive',ico:'📰',detail:`Moderate-to-strong written content footprint detected. Articles, profiles, or mentions about "${name}" likely exist across multiple sources.`}
+    :score>=35?{label:'Moderate',cls:'warn',ico:'📄',detail:`Some content exists about "${name}" but it is limited. More consistent publishing across platforms would improve AI knowledge.`}
+    :{label:'Weak',cls:'negative',ico:'📭',detail:`Very little written content about "${name}" found online. AI models have minimal data to draw from when referencing this ${isBiz?'business':'person'}.`};
+
+  // 3. Authority Score
+  const authSeed = sr(0,2,42);
+  const authority = score>=60?{label:'High',cls:'positive',ico:'🏛️',detail:`"${name}" shows signals of authority — likely referenced by credible sources, directories, or industry publications that AI models trust.`}
+    :score>=35?{label:'Medium',cls:'warn',ico:'🏗️',detail:`Some authority signals present but not strong enough to consistently influence AI outputs. Focus on getting featured in industry publications.`}
+    :{label:'Low',cls:'negative',ico:'🏚️',detail:`Weak authority signals detected. AI models prioritize authoritative sources — getting listed in directories, news sites, and niche platforms will help significantly.`};
+
+  // 4. AI Consistency
+  const consSeed = sr(0,2,43);
+  const consistency = score>=60?{label:'Consistent',cls:'positive',ico:'🔄',detail:`Different AI tools (ChatGPT, Gemini, Perplexity) would likely give similar descriptions of "${name}" — a sign of strong, consistent online presence.`}
+    :score>=35?{label:'Mixed',cls:'warn',ico:'🔀',detail:`AI tools may give different or incomplete descriptions of "${name}". Inconsistent online presence leads to inconsistent AI outputs.`}
+    :{label:'Unpredictable',cls:'negative',ico:'❓',detail:`AI tools would give very different or no information about "${name}". Without a clear, consistent online identity, AI cannot build a reliable profile.`};
+
+  // 5. Reputation Risk
+  const riskSeed = sr(0,2,44);
+  const repRisk = score>=55?{label:'Low Risk',cls:'positive',ico:'🛡️',detail:`No significant reputation risk signals detected for "${name}". AI is unlikely to surface negative content about this ${isBiz?'business':'person'}.`}
+    :score>=30?{label:'Medium Risk',cls:'warn',ico:'⚠️',detail:`Some ambiguity detected. Without a strong positive presence, AI may fill gaps with neutral or mixed information about "${name}".`}
+    :{label:'High Risk',cls:'negative',ico:'🚨',detail:`Low visibility creates high risk — when AI has little data, it may generate inaccurate or generic descriptions that could misrepresent "${name}".`};
+
+  const metrics = [aiAppear, contentFoot, authority, consistency, repRisk];
+  const metricLabels = ['AI Search Appearance','Content Footprint','Authority Score','AI Consistency','Reputation Risk'];
+
+  // ── Google-style AI Overview card ──
+  const profession  = hasContext ? context : (isBiz?'business':'professional');
+  const locStr      = hasLoc ? ` based in ${location}` : '';
+  const contextStr  = hasContext ? ` in the ${context} industry` : '';
+  const firstName   = nameParts[0];
+
+  const overviewIntro = score>=60
+    ? `${name} is a ${profession}${locStr}${contextStr}. ${isBiz?'The business has':'They have'} an established online presence with multiple AI-readable sources available across the web.`
+    : score>=35
+    ? `${name} is ${isBiz?'a business':'a professional'}${locStr}${contextStr ? ' in '+context:''} with a developing online presence. Some AI tools may recognize this ${isBiz?'brand':'name'}, though visibility varies across platforms.`
+    : `Limited information about ${name} is currently available to AI systems. ${isBiz?'This business':'This person'} has minimal publicly indexed content that AI models can reference.`;
+
+  const bullets = [];
+  if(isBiz){
+    bullets.push({icon:'🏢', label:'Business Type', val: hasContext?context:'Digital / Online Business'});
+    bullets.push({icon:'📍', label:'Location', val: hasLoc?location:'Not publicly specified'});
+    bullets.push({icon:'🌐', label:'Online Presence', val: score>=60?'Established — multiple platforms':'Limited — few indexed sources'});
+    bullets.push({icon:'⭐', label:'AI Recognition', val: aiAppear.label+' to appear in AI responses'});
+  } else {
+    bullets.push({icon:'👤', label:'Profile Type', val: hasContext?context+' Professional':'Individual / Professional'});
+    bullets.push({icon:'📍', label:'Location', val: hasLoc?location:'Not publicly specified'});
+    bullets.push({icon:'📰', label:'Media Presence', val: contentFoot.label+' content footprint'});
+    bullets.push({icon:'🏛️', label:'Authority', val: authority.label+' authority in online sources'});
+  }
+
+  // Sources (simulated)
+  const sources = score>=60
+    ? ['LinkedIn','Google Business','Industry Directory','News Mentions']
+    : score>=35
+    ? ['LinkedIn','Basic Web Presence']
+    : ['No significant sources found'];
 
   // ── Presence signals ──
   const signals = [];
-  const webPresence  = sr(0,1,30)===1;
-  const socialMedia  = sr(0,1,31)===1;
-  const newsArticles = sr(0,1,32)===1 && score>45;
-  const reviews      = sr(0,1,33)===1 && isBiz;
-  const wikipedia    = score>65 && sr(0,1,34)===1;
-
-  if(webPresence)  signals.push({icon:'🌐',label:'Website presence detected',type:'positive'});
-  if(socialMedia)  signals.push({icon:'📱',label:'Social media profiles found',type:'positive'});
-  if(newsArticles) signals.push({icon:'📰',label:'News/media mentions detected',type:'positive'});
-  if(reviews)      signals.push({icon:'⭐',label:'Business reviews/ratings present',type:'positive'});
-  if(wikipedia)    signals.push({icon:'📖',label:'Wikipedia or authority pages found',type:'positive'});
-  if(!webPresence) signals.push({icon:'⚠️',label:'Weak or no website signals',type:'warn'});
-  if(!socialMedia) signals.push({icon:'⚠️',label:'Limited social media footprint',type:'warn'});
-  if(!newsArticles && score<45) signals.push({icon:'❌',label:'No news/media coverage detected',type:'negative'});
+  if(sr(0,1,30)===1) signals.push({icon:'🌐',label:'Website presence detected',type:'positive'});
+  if(sr(0,1,31)===1) signals.push({icon:'📱',label:'Social media profiles found',type:'positive'});
+  if(sr(0,1,32)===1&&score>45) signals.push({icon:'📰',label:'News/media mentions detected',type:'positive'});
+  if(sr(0,1,33)===1&&isBiz) signals.push({icon:'⭐',label:'Business reviews/ratings present',type:'positive'});
+  if(score>65&&sr(0,1,34)===1) signals.push({icon:'📖',label:'Authority pages found',type:'positive'});
+  if(sr(0,1,30)===0) signals.push({icon:'⚠️',label:'Weak or no website signals',type:'warn'});
+  if(sr(0,1,31)===0) signals.push({icon:'⚠️',label:'Limited social media footprint',type:'warn'});
+  if(score<45) signals.push({icon:'❌',label:'No news/media coverage detected',type:'negative'});
 
   // ── Recommendations ──
-  const recs = [];
+  const recs=[];
   if(score<40){
-    recs.push(isBiz
-      ? 'Create or optimize your Google Business Profile — it is one of the strongest AI visibility signals.'
-      : 'Build a personal website or portfolio to establish your digital identity.');
-    recs.push('Publish content consistently — blog posts, press releases, or social media updates feed AI knowledge.');
-  }
-  if(score>=40 && score<60){
+    recs.push(isBiz?'Create or optimize your Google Business Profile — it is one of the strongest AI visibility signals.':'Build a personal website or portfolio to establish your digital identity.');
+    recs.push('Publish content consistently — blog posts, press releases, or social media updates feed AI knowledge bases.');
+  } else if(score<60){
     recs.push('Strengthen your online presence with consistent NAP (Name, Address, Phone) across all directories.');
-    recs.push(isBiz
-      ? 'Get more customer reviews on Google, Yelp, and Facebook — reviews are strong AI signals.'
-      : 'Build authority through guest posts, interviews, or speaking engagements in your industry.');
-  }
-  if(score>=60){
-    recs.push('Maintain your visibility by publishing fresh content regularly — AI models favor recently updated sources.');
+    recs.push(isBiz?'Get more customer reviews on Google, Yelp, and Facebook — reviews are strong AI training signals.':'Build authority through guest posts, interviews, or speaking engagements in your niche.');
+  } else {
+    recs.push('Maintain visibility by publishing fresh content regularly — AI models favor recently updated sources.');
     recs.push('Monitor your AI presence quarterly and address any negative content proactively.');
   }
-  recs.push('Implement structured data (Schema.org) on your website — this directly feeds AI search engines.');
+  recs.push('Add structured data (Schema.org) to your website — this directly signals AI search engines like Google AI Overview.');
 
-  return {score, level, levelColor, knowledgeText, sentiment, signals, recs, name, type, context, location};
+  return {score,level,levelColor,sentiment,overviewIntro,bullets,sources,metrics,metricLabels,signals,recs,name,type,context,location};
 }
 
-function renderAIVisibility(r, name){
-  const sentColors = {Positive:'pos', Neutral:'neu', Negative:'neg', Unknown:'neu'};
-  const signalCards = r.signals.map(s=>`
+function renderAIVisibility(r){
+  const sentColors={Positive:'pos',Neutral:'neu',Negative:'neg',Unknown:'neu'};
+
+  // ── Google AI Overview card ──
+  const bulletHTML = r.bullets.map(b=>`
+    <div style="display:flex;gap:.6rem;align-items:flex-start;padding:.6rem 0;border-bottom:1px solid #f0f0f0">
+      <span style="font-size:.95rem;flex-shrink:0;margin-top:.05rem">${b.icon}</span>
+      <div><strong style="font-size:.83rem;color:#444;display:block">${b.label}:</strong><span style="font-size:.83rem;color:#222">${b.val}</span></div>
+    </div>`).join('');
+
+  const sourceHTML = r.sources.map(s=>`
+    <span style="background:#f0f4ff;color:#4060c0;font-size:.72rem;font-weight:600;padding:.25rem .7rem;border-radius:50px">${s}</span>`).join('');
+
+  const googleCard=`
+    <div style="background:#fff;border:1px solid #dde3ea;border-radius:14px;padding:1.4rem;margin-bottom:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.06)">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem">
+        <span style="font-size:1rem">✨</span>
+        <span style="font-family:var(--fh);font-size:.85rem;font-weight:700;color:#1a73e8">AI Overview</span>
+        <span style="margin-left:auto;font-size:.72rem;color:#888;background:#f5f5f5;padding:.2rem .6rem;border-radius:50px">Simulated</span>
+      </div>
+      <p style="font-size:.9rem;color:#222;line-height:1.7;margin-bottom:1rem">${r.overviewIntro}</p>
+      <div style="margin-bottom:1rem">${bulletHTML}</div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
+        <span style="font-size:.72rem;color:#888">Sources likely used:</span>
+        ${sourceHTML}
+      </div>
+    </div>`;
+
+  // ── 5 Metrics ──
+  const metricIcons=['🔍','📰','🏛️','🔄','🛡️'];
+  const metricsHTML = r.metrics.map((m,i)=>`
+    <div class="aiv-card ${m.cls}">
+      <div class="aiv-card-head">
+        <span class="aiv-card-ico">${m.ico}</span>
+        <strong>${r.metricLabels[i]}</strong>
+        <span style="margin-left:auto;font-size:.75rem;font-weight:700;padding:.2rem .65rem;border-radius:50px;background:rgba(0,0,0,.07)">${m.label}</span>
+      </div>
+      <p>${m.detail}</p>
+    </div>`).join('');
+
+  // ── Signals ──
+  const signalHTML = r.signals.map(s=>`
     <div class="aiv-card ${s.type==='positive'?'positive':s.type==='warn'?'warn':'negative'}">
       <div class="aiv-card-head"><span class="aiv-card-ico">${s.icon}</span><strong>${s.label}</strong></div>
     </div>`).join('');
 
-  const recCards = r.recs.map(rec=>`
+  // ── Recs ──
+  const recHTML = r.recs.map(rec=>`
     <div class="aiv-card neutral">
       <div class="aiv-card-head"><span class="aiv-card-ico">💡</span><strong>Recommendation</strong></div>
       <p>${rec}</p>
     </div>`).join('');
 
-  const el = document.getElementById('aiv-results');
+  const el=document.getElementById('aiv-results');
   el.innerHTML=`
     <div class="aiv-score-row">
       <div class="aiv-score-circ ${r.levelColor}">
@@ -1261,7 +1328,7 @@ function renderAIVisibility(r, name){
       </div>
       <div>
         <h3 style="font-family:var(--fh);font-size:1rem;font-weight:700;margin-bottom:.35rem">AI Visibility: ${r.level}</h3>
-        <p style="font-size:.85rem;color:var(--muted);line-height:1.55">${r.knowledgeText}</p>
+        <p style="font-size:.85rem;color:var(--muted);line-height:1.55">${r.score>=60?'Strong AI presence detected.':r.score>=35?'Moderate AI presence — room to grow.':'Low AI presence — action needed.'}</p>
         <div class="aiv-sent-pills" style="margin-top:.6rem">
           <span class="aiv-pill ${sentColors[r.sentiment]||'neu'}">Sentiment: ${r.sentiment}</span>
           <span class="aiv-pill neu">${r.type==='person'?'👤 Person':'🏢 Business'}</span>
@@ -1270,10 +1337,19 @@ function renderAIVisibility(r, name){
         </div>
       </div>
     </div>
-    <h4 style="font-family:var(--fh);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">Presence Signals</h4>
-    <div class="aiv-cards" style="margin-bottom:1.5rem">${signalCards}</div>
-    <h4 style="font-family:var(--fh);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">How to Improve</h4>
-    <div class="aiv-cards">${recCards}</div>
+
+    <h4 style="font-family:var(--fh);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">Simulated AI Overview</h4>
+    ${googleCard}
+
+    <h4 style="font-family:var(--fh);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:.8rem 0">AI Profile Breakdown</h4>
+    <div class="aiv-cards" style="margin-bottom:1.5rem">${metricsHTML}</div>
+
+    <h4 style="font-family:var(--fh);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">Presence Signals</h4>
+    <div class="aiv-cards" style="margin-bottom:1.5rem">${signalHTML}</div>
+
+    <h4 style="font-family:var(--fh);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">How to Improve</h4>
+    <div class="aiv-cards">${recHTML}</div>
+
     <p style="text-align:center;margin-top:1.5rem;font-size:.82rem;color:var(--muted)">
       Want expert help improving your AI visibility? <a href="#" onclick="go('contact')" style="color:var(--c1);font-weight:700">Book a free strategy call →</a>
     </p>`;
