@@ -409,6 +409,27 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
 .prc-section{display:none}
 .prc-section.active{display:block}
 @media(max-width:900px){.pricing-grid{grid-template-columns:1fr}}
+/* ── PRIVACY POLICY ── */
+.pp-content{max-width:780px;margin:0 auto;padding:100px 6% 80px}
+.pp-content h1{font-family:var(--fh);font-size:2.2rem;font-weight:800;letter-spacing:-1.5px;margin-bottom:.5rem}
+.pp-content .pp-date{color:var(--muted);font-size:.85rem;margin-bottom:2.5rem;display:block}
+.pp-content h2{font-family:var(--fh);font-size:1.1rem;font-weight:700;margin:2rem 0 .6rem;color:var(--text)}
+.pp-content p{color:var(--muted);font-size:.92rem;line-height:1.8;margin-bottom:.8rem}
+.pp-content ul{margin:.5rem 0 .8rem 1.2rem;display:flex;flex-direction:column;gap:.4rem}
+.pp-content ul li{color:var(--muted);font-size:.92rem;line-height:1.7}
+.pp-content a{color:var(--c1);text-decoration:none;font-weight:600}
+.pp-divider{height:1px;background:var(--border);margin:1.5rem 0}
+
+/* ── COOKIE BANNER ── */
+.cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:var(--c4);border-top:1px solid rgba(255,255,255,.1);padding:1rem 5%;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;transform:translateY(100%);transition:transform .4s ease}
+.cookie-banner.show{transform:translateY(0)}
+.cookie-text{color:rgba(255,255,255,.75);font-size:.82rem;line-height:1.6;max-width:700px}
+.cookie-text a{color:var(--c1);text-decoration:none;font-weight:600}
+.cookie-btns{display:flex;gap:.75rem;flex-shrink:0}
+.cookie-accept{background:var(--c1);color:#fff;border:none;padding:.55rem 1.4rem;border-radius:50px;font-size:.82rem;font-weight:700;cursor:pointer;transition:background .2s}
+.cookie-accept:hover{background:#e04000}
+.cookie-decline{background:transparent;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.2);padding:.55rem 1.2rem;border-radius:50px;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s}
+.cookie-decline:hover{border-color:rgba(255,255,255,.5);color:rgba(255,255,255,.8)}
 </style>
 </head>
 <body>
@@ -576,7 +597,7 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
     <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Website Development</a></li><li><a onclick="go('services')">SEO Optimization</a></li><li><a onclick="go('services')">Local SEO</a></li><li><a onclick="go('services')">Social Media</a></li><li><a onclick="go('services')">Branding</a></li></ul></div>
     <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About VCM</a></li><li><a onclick="go('portfolio')">Our Work</a></li><li><a onclick="go('blog')">Blog</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
     <div class="fcol"><h4>Free Tools</h4><ul><li><a onclick="go('tools')">On-Page SEO Audit</a></li><li><a onclick="go('contact')">Free Consultation</a></li></ul></div>
-  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA · All rights reserved.</p><div class="socials"><a class="sol" title="Facebook">FB</a><a class="sol" title="Instagram">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
+  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA · <a href="#" onclick="go('privacy')" style="color:rgba(255,255,255,.4);text-decoration:none;font-size:.76rem">Privacy Policy</a></p><div class="socials"><a class="sol" title="Facebook" href="https://www.facebook.com/vcmonlineservice/" target="_blank" rel="noopener">FB</a><a class="sol" title="Instagram" href="https://www.instagram.com/vcm.onlineservice/" target="_blank" rel="noopener">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
 </div>
 
 <!-- ═══════════════════════════════
@@ -608,7 +629,7 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
     <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li><li><a onclick="go('services')">Local SEO</a></li><li><a onclick="go('services')">Social Media</a></li></ul></div>
     <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('portfolio')">Portfolio</a></li><li><a onclick="go('blog')">Blog</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
     <div class="fcol"><h4>Tools</h4><ul><li><a onclick="go('tools')">On-Page Audit</a></li><li><a onclick="go('contact')">Free Consult</a></li></ul></div>
-  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA</p><div class="socials"><a class="sol" title="Facebook">FB</a><a class="sol" title="Instagram">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
+  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA · <a href="#" onclick="go('privacy')" style="color:rgba(255,255,255,.4);text-decoration:none;font-size:.76rem">Privacy Policy</a></p><div class="socials"><a class="sol" title="Facebook" href="https://www.facebook.com/vcmonlineservice/" target="_blank" rel="noopener">FB</a><a class="sol" title="Instagram" href="https://www.instagram.com/vcm.onlineservice/" target="_blank" rel="noopener">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
 </div>
 
 <!-- ═══════════════════════════════
@@ -637,7 +658,7 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
     <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li><li><a onclick="go('services')">Local SEO</a></li></ul></div>
     <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('portfolio')">Portfolio</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
     <div class="fcol"><h4>Tools</h4><ul><li><a onclick="go('tools')">On-Page Audit</a></li></ul></div>
-  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA</p><div class="socials"><a class="sol" title="Facebook">FB</a><a class="sol" title="Instagram">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
+  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA · <a href="#" onclick="go('privacy')" style="color:rgba(255,255,255,.4);text-decoration:none;font-size:.76rem">Privacy Policy</a></p><div class="socials"><a class="sol" title="Facebook" href="https://www.facebook.com/vcmonlineservice/" target="_blank" rel="noopener">FB</a><a class="sol" title="Instagram" href="https://www.instagram.com/vcm.onlineservice/" target="_blank" rel="noopener">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
 </div>
 
 <!-- ═══════════════════════════════
@@ -683,7 +704,7 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
     <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li><li><a onclick="go('services')">Local SEO</a></li></ul></div>
     <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('portfolio')">Portfolio</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
     <div class="fcol"><h4>Tools</h4><ul><li><a onclick="go('tools')">On-Page Audit</a></li></ul></div>
-  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA</p><div class="socials"><a class="sol" title="Facebook">FB</a><a class="sol" title="Instagram">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
+  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA · <a href="#" onclick="go('privacy')" style="color:rgba(255,255,255,.4);text-decoration:none;font-size:.76rem">Privacy Policy</a></p><div class="socials"><a class="sol" title="Facebook" href="https://www.facebook.com/vcmonlineservice/" target="_blank" rel="noopener">FB</a><a class="sol" title="Instagram" href="https://www.instagram.com/vcm.onlineservice/" target="_blank" rel="noopener">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
 </div>
 
 <!-- ═══════════════════════════════
@@ -711,7 +732,7 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
     <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li></ul></div>
     <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('portfolio')">Portfolio</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
     <div class="fcol"><h4>Tools</h4><ul><li><a onclick="go('tools')">On-Page Audit</a></li></ul></div>
-  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA</p><div class="socials"><a class="sol" title="Facebook">FB</a><a class="sol" title="Instagram">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
+  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA · <a href="#" onclick="go('privacy')" style="color:rgba(255,255,255,.4);text-decoration:none;font-size:.76rem">Privacy Policy</a></p><div class="socials"><a class="sol" title="Facebook" href="https://www.facebook.com/vcmonlineservice/" target="_blank" rel="noopener">FB</a><a class="sol" title="Instagram" href="https://www.instagram.com/vcm.onlineservice/" target="_blank" rel="noopener">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
 </div>
 
 <!-- ═══════════════════════════════
@@ -746,7 +767,7 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
     <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li></ul></div>
     <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
     <div class="fcol"><h4>Tools</h4><ul><li><a onclick="go('tools')">On-Page Audit</a></li></ul></div>
-  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA</p><div class="socials"><a class="sol" title="Facebook">FB</a><a class="sol" title="Instagram">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
+  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA · <a href="#" onclick="go('privacy')" style="color:rgba(255,255,255,.4);text-decoration:none;font-size:.76rem">Privacy Policy</a></p><div class="socials"><a class="sol" title="Facebook" href="https://www.facebook.com/vcmonlineservice/" target="_blank" rel="noopener">FB</a><a class="sol" title="Instagram" href="https://www.instagram.com/vcm.onlineservice/" target="_blank" rel="noopener">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
 </div>
 
 <!-- ═══════════════════════════════
@@ -949,7 +970,7 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
     <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li><li><a onclick="go('services')">Local SEO</a></li></ul></div>
     <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('portfolio')">Portfolio</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
     <div class="fcol"><h4>Tools</h4><ul><li><a onclick="go('pricing')">Pricing</a></li><li><a onclick="go('tools')">On-Page Audit</a></li></ul></div>
-  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA</p><div class="socials"><a class="sol" title="Facebook">FB</a><a class="sol" title="Instagram">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
+  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA · <a href="#" onclick="go('privacy')" style="color:rgba(255,255,255,.4);text-decoration:none;font-size:.76rem">Privacy Policy</a></p><div class="socials"><a class="sol" title="Facebook" href="https://www.facebook.com/vcmonlineservice/" target="_blank" rel="noopener">FB</a><a class="sol" title="Instagram" href="https://www.instagram.com/vcm.onlineservice/" target="_blank" rel="noopener">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
 </div>
 
 <!-- ═══════════════════════════════
@@ -1030,7 +1051,7 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
     <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li><li><a onclick="go('services')">Local SEO</a></li></ul></div>
     <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('portfolio')">Portfolio</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
     <div class="fcol"><h4>Free Tools</h4><ul><li><a onclick="go('tools')">On-Page SEO Audit</a></li><li><a onclick="go('aiv')">AI Visibility Checker</a></li><li><a onclick="go('pricing')">Pricing</a></li></ul></div>
-  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA</p><div class="socials"><a class="sol" title="Facebook">FB</a><a class="sol" title="Instagram">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
+  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA · <a href="#" onclick="go('privacy')" style="color:rgba(255,255,255,.4);text-decoration:none;font-size:.76rem">Privacy Policy</a></p><div class="socials"><a class="sol" title="Facebook" href="https://www.facebook.com/vcmonlineservice/" target="_blank" rel="noopener">FB</a><a class="sol" title="Instagram" href="https://www.instagram.com/vcm.onlineservice/" target="_blank" rel="noopener">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
 </div>
 
 <!-- ═══════════════════════════════
@@ -1089,7 +1110,7 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
     <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li><li><a onclick="go('services')">Local SEO</a></li></ul></div>
     <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('portfolio')">Portfolio</a></li><li><a onclick="go('blog')">Blog</a></li></ul></div>
     <div class="fcol"><h4>Tools</h4><ul><li><a onclick="go('tools')">On-Page Audit</a></li></ul></div>
-  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA</p><div class="socials"><a class="sol" title="Facebook">FB</a><a class="sol" title="Instagram">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
+  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA · <a href="#" onclick="go('privacy')" style="color:rgba(255,255,255,.4);text-decoration:none;font-size:.76rem">Privacy Policy</a></p><div class="socials"><a class="sol" title="Facebook" href="https://www.facebook.com/vcmonlineservice/" target="_blank" rel="noopener">FB</a><a class="sol" title="Instagram" href="https://www.instagram.com/vcm.onlineservice/" target="_blank" rel="noopener">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -1258,10 +1279,16 @@ function analyzeAIVisibility(name, type, context, location){
   const overviewIntro = score>=88
     ?`${name} is one of the most recognized ${isBiz?'brands':'figures'} globally${locStr}. AI systems across all major platforms have extensive, well-documented knowledge about ${isBiz?'this company':'them'}, drawing from thousands of authoritative sources including news media, Wikipedia, and industry publications.`
     :score>=70
-    ?`${name} is a well-known ${profession}${locStr}${ctxStr}. ${isBiz?'The business has':'They have'} a strong online presence with multiple AI-readable sources, making ${isBiz?'it':'them'} consistently recognizable across major AI platforms.`
+    ?`${name} is a well-known ${profession}${locStr}${ctxStr}. ${isBiz?'The business has':'They have'} a strong online presence with multiple AI-readable sources, making ${isBiz?'it':'them'} consistently recognizable across major AI platforms including Google AI, ChatGPT, and Perplexity.`
+    :score>=40 && hasContext && hasLoc
+    ?`${name} is a ${profession} in ${location}${ctxStr}. Based on available digital footprint signals, this ${isBiz?'business':'person'} has a moderate online presence — enough for some AI tools to generate a partial profile, but not yet strong enough for consistent, accurate recognition across all AI platforms.`
+    :score>=40 && hasContext
+    ?`${name} appears to be a ${profession}${ctxStr}. Our analysis detected a moderate digital footprint for this ${isBiz?'business':'name'}, though AI platforms may generate incomplete or inconsistent profiles. Expanding online presence across authoritative sources would significantly improve AI recognition.`
     :score>=40
-    ?`${name} is a ${profession}${locStr}${ctxStr} with a developing online presence. Some AI tools may recognize this ${isBiz?'brand':'name'}, though visibility varies. Building more consistent digital assets would improve AI recognition significantly.`
-    :`Limited information about ${name} is currently available to AI systems. ${isBiz?'This business':'This person'} has minimal publicly indexed content — a common situation for newer or local-focused ${isBiz?'businesses':'professionals'}.`;
+    ?`Based on our analysis, ${name} has a limited but detectable digital presence. AI platforms currently have insufficient data to generate a complete, accurate profile — results may vary significantly across ChatGPT, Google AI, and Perplexity. ${hasContext?'':'Adding industry and location details above may refine this estimate.'}`
+    :hasContext||hasLoc
+    ?`Our analysis found minimal AI-readable content for ${name}${locStr}${ctxStr}. This is common for local businesses and professionals who haven't yet invested in building a structured digital presence. AI platforms like Google AI Mode would likely return no results or generic descriptions for this ${isBiz?'business':'name'} at this time.`
+    :`Our analysis found minimal publicly indexed content for "${name}". Without sufficient digital footprint data, AI platforms like Google AI Mode, ChatGPT, and Perplexity are unlikely to generate an accurate profile. Try adding your industry and location above for a more refined analysis.`;
 
   const bullets = isBiz ? [
     {icon:'🏢',label:'Business Type',   val:hasContext?context:'Digital / Online Business'},
@@ -1398,9 +1425,10 @@ function renderAIVisibility(r){
     <div style="background:#fff;border:1px solid #dde3ea;border-radius:14px;padding:1.4rem;margin-bottom:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.06)">
       <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem">
         <span style="font-size:1rem">✨</span>
-        <span style="font-family:var(--fh);font-size:.85rem;font-weight:700;color:#1a73e8">AI Overview</span>
-        <span style="margin-left:auto;font-size:.72rem;color:#888;background:#f5f5f5;padding:.2rem .6rem;border-radius:50px">Simulated</span>
+        <span style="font-family:var(--fh);font-size:.85rem;font-weight:700;color:#1a73e8">AI Overview Preview</span>
+        <span style="margin-left:auto;font-size:.72rem;color:#888;background:#f5f5f5;padding:.2rem .6rem;border-radius:50px">📊 Estimated — not live data</span>
       </div>
+      <p style="font-size:.78rem;color:#999;margin-bottom:.8rem;font-style:italic">⚠️ This is an estimated AI profile based on digital footprint analysis — not a live pull from Google AI or ChatGPT. Actual AI outputs may differ.</p>
       <p style="font-size:.9rem;color:#222;line-height:1.7;margin-bottom:1rem">${r.overviewIntro}</p>
       <div style="margin-bottom:1rem">${bulletHTML}</div>
       <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
@@ -1443,17 +1471,18 @@ function renderAIVisibility(r){
       </div>
       <div>
         <h3 style="font-family:var(--fh);font-size:1rem;font-weight:700;margin-bottom:.35rem">AI Visibility: ${r.level}</h3>
-        <p style="font-size:.85rem;color:var(--muted);line-height:1.55">${r.score>=60?'Strong AI presence detected.':r.score>=35?'Moderate AI presence — room to grow.':'Low AI presence — action needed.'}</p>
+        <p style="font-size:.85rem;color:var(--muted);line-height:1.55">${r.score>=70?'Strong AI presence detected.':r.score>=40?'Moderate AI presence — room to grow.':'Low AI presence — action needed.'}</p>
         <div class="aiv-sent-pills" style="margin-top:.6rem">
           <span class="aiv-pill ${sentColors[r.sentiment]||'neu'}">Sentiment: ${r.sentiment}</span>
           <span class="aiv-pill neu">${r.type==='person'?'👤 Person':'🏢 Business'}</span>
           ${r.context?`<span class="aiv-pill neu">${r.context}</span>`:''}
           ${r.location?`<span class="aiv-pill neu">📍 ${r.location}</span>`:''}
         </div>
+        ${r.score<70&&(!r.context||!r.location)?`<p style="font-size:.75rem;color:var(--c1);margin-top:.6rem;font-weight:600">💡 Tip: Add industry + location above for a more accurate estimate</p>`:''}
       </div>
     </div>
 
-    <h4 style="font-family:var(--fh);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">Simulated AI Overview</h4>
+    <h4 style="font-family:var(--fh);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">Estimated AI Overview</h4>
     ${googleCard}
 
     <h4 style="font-family:var(--fh);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:.8rem 0">AI Profile Breakdown</h4>
@@ -1787,8 +1816,124 @@ function renderAudit(audit,url,kw){
   el.classList.add('show');
 }
 
+// ═══ COOKIE BANNER ═══
+function initCookieBanner(){
+  if(localStorage.getItem('vcm_cookie_consent')) return;
+  setTimeout(()=>document.getElementById('cookie-banner').classList.add('show'), 1500);
+}
+function acceptCookies(){
+  localStorage.setItem('vcm_cookie_consent','accepted');
+  document.getElementById('cookie-banner').classList.remove('show');
+}
+function declineCookies(){
+  localStorage.setItem('vcm_cookie_consent','declined');
+  document.getElementById('cookie-banner').classList.remove('show');
+}
+initCookieBanner();
+
 // init nav style on load
 updateNav('home');
 </script>
+<!-- ═══════════════════════════════
+     PRIVACY POLICY
+═══════════════════════════════ -->
+<div id="privacy" class="page">
+  <div style="padding-top:70px;background:var(--white);min-height:100vh">
+    <div class="pp-content">
+      <h1>Privacy Policy</h1>
+      <span class="pp-date">Last updated: June 2026</span>
+      <div class="pp-divider"></div>
+
+      <p>VCM Online Service ("we," "us," or "our") operates the website <a href="https://www.vcmrk.com">www.vcmrk.com</a>. This Privacy Policy explains how we collect, use, and protect your personal information when you visit our website or use our free tools.</p>
+      <p>By using our website, you agree to the collection and use of information in accordance with this policy.</p>
+
+      <h2>1. Information We Collect</h2>
+      <p>We collect the following types of information:</p>
+      <ul>
+        <li><strong>Contact form submissions</strong> — name, email address, business name, and message when you fill out our contact form</li>
+        <li><strong>Free tool usage</strong> — URLs and keywords entered into our On-Page SEO Audit tool, and names entered into our AI Visibility Checker, for internal analysis and service improvement</li>
+        <li><strong>Usage data</strong> — browser type, pages visited, time spent on pages, and referring URLs, collected automatically via Google Analytics</li>
+        <li><strong>Cookies</strong> — small data files stored on your device to improve your browsing experience (see Section 5)</li>
+      </ul>
+
+      <h2>2. How We Use Your Information</h2>
+      <p>We use the information we collect to:</p>
+      <ul>
+        <li>Respond to your inquiries and provide our services</li>
+        <li>Improve our website, tools, and user experience</li>
+        <li>Analyze website traffic and usage patterns via Google Analytics</li>
+        <li>Send follow-up communications if you have opted in</li>
+        <li>Comply with legal obligations</li>
+      </ul>
+      <p>We do not sell, trade, or rent your personal information to third parties.</p>
+
+      <h2>3. Third-Party Services</h2>
+      <p>We use the following third-party services that may collect and process data:</p>
+      <ul>
+        <li><strong>Google Analytics</strong> — tracks website usage and visitor behavior. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></li>
+        <li><strong>EmailJS</strong> — processes contact form submissions and sends emails on our behalf. <a href="https://www.emailjs.com/legal/privacy-policy/" target="_blank" rel="noopener">EmailJS Privacy Policy</a></li>
+        <li><strong>Google Sheets (Apps Script)</strong> — stores anonymized tool usage data (URLs and keywords) for internal analysis</li>
+        <li><strong>Cloudflare</strong> — provides security and performance services for our website. <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare Privacy Policy</a></li>
+      </ul>
+
+      <h2>4. Data Retention</h2>
+      <p>We retain contact form data for up to 12 months for follow-up purposes. Tool usage data (audit queries) is retained for internal analysis and deleted after 12 months. You may request deletion of your data at any time by contacting us.</p>
+
+      <h2>5. Cookies</h2>
+      <p>Our website uses cookies to enhance your experience. We use:</p>
+      <ul>
+        <li><strong>Essential cookies</strong> — necessary for the website to function properly</li>
+        <li><strong>Analytics cookies</strong> — used by Google Analytics to understand how visitors interact with our site</li>
+        <li><strong>Preference cookies</strong> — remember your cookie consent choice</li>
+      </ul>
+      <p>You can choose to accept or decline cookies via the banner on your first visit. You can also control cookies through your browser settings at any time.</p>
+
+      <h2>6. California Privacy Rights (CCPA)</h2>
+      <p>As a business based in West Covina, California, we comply with the California Consumer Privacy Act (CCPA). California residents have the right to:</p>
+      <ul>
+        <li>Know what personal information we collect and how it is used</li>
+        <li>Request deletion of their personal information</li>
+        <li>Opt out of the sale of personal information (we do not sell personal information)</li>
+        <li>Non-discrimination for exercising their privacy rights</li>
+      </ul>
+      <p>To exercise any of these rights, contact us at <a href="mailto:vmc.onlineservice@gmail.com">vmc.onlineservice@gmail.com</a>.</p>
+
+      <h2>7. GDPR (European Users)</h2>
+      <p>If you are located in the European Economic Area (EEA), you have the right to access, correct, or delete your personal data. Our legal basis for processing your data is your consent and our legitimate business interests. To exercise your rights, contact us directly.</p>
+
+      <h2>8. Data Security</h2>
+      <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.</p>
+
+      <h2>9. Children's Privacy</h2>
+      <p>Our website is not directed at children under the age of 13. We do not knowingly collect personal information from children. If you believe we have inadvertently collected such information, please contact us immediately.</p>
+
+      <h2>10. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. We will notify you of any changes by updating the "Last updated" date at the top of this page. We encourage you to review this policy periodically.</p>
+
+      <h2>11. Contact Us</h2>
+      <p>If you have any questions about this Privacy Policy or how we handle your data, please contact us:</p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:vmc.onlineservice@gmail.com">vmc.onlineservice@gmail.com</a></li>
+        <li><strong>Website:</strong> <a href="https://www.vcmrk.com">www.vcmrk.com</a></li>
+        <li><strong>Location:</strong> West Covina, CA, United States</li>
+      </ul>
+
+      <div class="pp-divider"></div>
+      <p style="font-size:.82rem;color:var(--muted)">© 2026 VCM Online Service · West Covina, CA · All rights reserved. <a href="#" onclick="go('home')">← Back to Home</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ COOKIE BANNER ═══ -->
+<div class="cookie-banner" id="cookie-banner">
+  <p class="cookie-text">
+    🍪 We use cookies to improve your experience and analyze website traffic. By clicking "Accept," you consent to our use of cookies. See our <a href="#" onclick="go('privacy')">Privacy Policy</a> for details.
+  </p>
+  <div class="cookie-btns">
+    <button class="cookie-decline" onclick="declineCookies()">Decline</button>
+    <button class="cookie-accept" onclick="acceptCookies()">Accept</button>
+  </div>
+</div>
+
 </body>
 </html>
