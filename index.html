@@ -20,7 +20,7 @@
 <meta name="google-site-verification" content="j54Yd4VRlTroui0OAMvelGFs0ZZf4hv9ZcTHFcbbA7A" />
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
 <!-- LocalBusiness Schema (JSON-LD) -->
 <script type="application/ld+json">
 {
@@ -63,11 +63,12 @@
 </script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body,input,textarea,select,button{font-stretch:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 :root{
   --c1:#FF4D00;--c2:#FFB800;--c3:#00C2A8;--c4:#0F0F1A;--c5:#F6F3EF;
   --white:#ffffff;--text:#0F0F1A;--muted:#6B6B80;--border:#E2E0DB;
   --r:12px;--rl:20px;
-  --fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
+  --fh:'Roboto',sans-serif;--fb:'Roboto',sans-serif;
 }
 html{scroll-behavior:smooth}
 body{font-family:var(--fb);color:var(--text);background:var(--white);overflow-x:hidden}
@@ -113,7 +114,7 @@ nav.light .nav-toggle span{background:var(--text);}
 /* ── SHARED ── */
 .wrap{max-width:1240px;margin:0 auto;width:100%;padding:0 6%}
 .eyebrow{font-size:.73rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--c1);margin-bottom:.75rem;display:block}
-.stitle{font-family:var(--fh);font-size:clamp(2rem,4vw,2.9rem);font-weight:800;letter-spacing:-1.5px;line-height:1.08;margin-bottom:1rem}
+.stitle{font-family:var(--fh);font-size:clamp(2rem,4vw,2.9rem);font-weight:900;letter-spacing:-0.5px;line-height:1.08;margin-bottom:1rem}
 .ssub{color:var(--muted);max-width:540px;line-height:1.75;font-size:.97rem}
 .btn-o{background:var(--c1);color:var(--white);padding:.85rem 2rem;border-radius:50px;text-decoration:none;font-weight:700;font-size:.92rem;border:none;cursor:pointer;display:inline-block;transition:all .2s}
 .btn-o:hover{background:#e04000;transform:translateY(-2px)}
@@ -409,6 +410,35 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
 .prc-section{display:none}
 .prc-section.active{display:block}
 @media(max-width:900px){.pricing-grid{grid-template-columns:1fr}}
+/* ── GUIDE PAGES ── */
+.guide-hero{background:var(--c4);padding:140px 0 80px;position:relative;overflow:hidden;flex-shrink:0}
+.guide-hero-glow{position:absolute;top:-80px;right:-80px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,194,168,.2),transparent 68%);pointer-events:none}
+.guide-body{max-width:820px;margin:0 auto;padding:60px 6%}
+.guide-body h2{font-family:var(--fh);font-size:1.3rem;font-weight:800;letter-spacing:-1px;margin:2rem 0 .7rem;color:var(--text)}
+.guide-body h3{font-family:var(--fh);font-size:1rem;font-weight:700;margin:1.5rem 0 .5rem;color:var(--text)}
+.guide-body p{color:var(--muted);font-size:.95rem;line-height:1.8;margin-bottom:.9rem}
+.guide-body ul{margin:.5rem 0 1rem 1.2rem;display:flex;flex-direction:column;gap:.4rem}
+.guide-body ul li{color:var(--muted);font-size:.93rem;line-height:1.7}
+.guide-divider{height:1px;background:var(--border);margin:2rem 0}
+.guide-kw-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 2rem}
+.guide-kw-pill{background:rgba(255,77,0,.08);color:var(--c1);font-size:.75rem;font-weight:700;padding:.3rem .85rem;border-radius:50px;letter-spacing:.03em}
+.guide-download-box{background:var(--c4);border-radius:var(--rl);padding:2.5rem;text-align:center;margin:2.5rem 0;position:relative;overflow:hidden}
+.guide-download-glow{position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(255,77,0,.2),transparent 60%);pointer-events:none}
+.guide-download-box h3{font-family:var(--fh);font-size:1.2rem;font-weight:800;color:var(--white);margin-bottom:.5rem;position:relative}
+.guide-download-box p{color:rgba(255,255,255,.55);font-size:.85rem;margin-bottom:1.5rem;position:relative}
+.guide-dl-btn{background:var(--c1);color:var(--white);padding:.9rem 2rem;border-radius:50px;text-decoration:none;font-family:var(--fh);font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;gap:.5rem;transition:all .2s;position:relative}
+.guide-dl-btn:hover{background:#e04000;transform:translateY(-2px)}
+.guide-cta-box{background:linear-gradient(135deg,#FF4D00,#FF8C00);border-radius:var(--rl);padding:2.5rem;margin:2.5rem 0;color:var(--white)}
+.guide-cta-box h3{font-family:var(--fh);font-size:1.3rem;font-weight:800;letter-spacing:-1px;margin-bottom:.6rem}
+.guide-cta-box p{color:rgba(255,255,255,.85);font-size:.92rem;line-height:1.7;margin-bottom:1.5rem}
+.guide-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
+.guide-stat{background:var(--c5);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center}
+.guide-stat-num{font-family:var(--fh);font-size:1.6rem;font-weight:800;color:var(--c1);display:block}
+.guide-stat-lbl{font-size:.75rem;color:var(--muted);margin-top:.2rem;display:block}
+.guide-breadcrumb{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);margin-bottom:1.5rem}
+.guide-breadcrumb a{color:var(--c1);font-weight:600;cursor:pointer;text-decoration:none}
+.guide-breadcrumb span{color:var(--muted)}
+@media(max-width:600px){.guide-stat-row{grid-template-columns:1fr 1fr}}
 /* ── PRIVACY POLICY ── */
 .pp-content{max-width:780px;margin:0 auto;padding:100px 6% 80px}
 .pp-content h1{font-family:var(--fh);font-size:2.2rem;font-weight:800;letter-spacing:-1.5px;margin-bottom:.5rem}
@@ -714,10 +744,65 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
   <div class="pg-hero"><div class="pg-hero-glow"></div>
     <div class="wrap"><span class="eyebrow" style="color:#FF7A3D">VCM Blog</span>
       <h1 class="pg-title">Digital Marketing <span>Insights</span></h1>
-      <p class="pg-sub">Tips, strategies, and guides to help businesses in West Covina and beyond grow online.</p>
+      <p class="pg-sub">Tips, strategies, free guides, and resources to help businesses in West Covina and beyond grow online.</p>
     </div>
   </div>
   <section><div class="wrap">
+
+    <!-- FREE GUIDES SECTION -->
+    <div style="margin-bottom:3rem">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+        <div>
+          <span class="eyebrow" style="margin-bottom:.3rem">Free Business Blueprints</span>
+          <h2 class="stitle" style="font-size:1.5rem;margin-bottom:0">Download Our Free Guides</h2>
+        </div>
+        <span style="background:rgba(255,77,0,.1);color:var(--c1);font-size:.75rem;font-weight:700;padding:.35rem .9rem;border-radius:50px">3 Guides Available</span>
+      </div>
+      <div class="blog-grid">
+        <div class="bcard" onclick="go('guide-aeroponic')" style="cursor:pointer">
+          <div class="bthumb" style="background:linear-gradient(135deg,#00C2A8,#0077FF)">🌱</div>
+          <div class="bbody">
+            <span class="bcat">Business Blueprint</span>
+            <h3>From Seed to Side Hustle: The Aeroponic Tower Garden Blueprint</h3>
+            <p>How to grow 18+ plants vertically in 2 sqm and turn your harvest into a local income stream. Free PDF guide.</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.8rem">
+              <span class="bmeta">Free Download · 15 pages</span>
+              <span style="color:var(--c1);font-size:.78rem;font-weight:700">Download →</span>
+            </div>
+          </div>
+        </div>
+        <div class="bcard" onclick="go('guide-concrete')" style="cursor:pointer">
+          <div class="bthumb" style="background:linear-gradient(135deg,#1A1A2E,#4A3F8A)">🏗️</div>
+          <div class="bbody">
+            <span class="bcat">Business Blueprint</span>
+            <h3>Start a Decorative Concrete Panel Business: Complete Blueprint</h3>
+            <p>From small workshop to paying customers — startup costs, income projections, and a local sales system. Free PDF guide.</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.8rem">
+              <span class="bmeta">Free Download · 16 pages</span>
+              <span style="color:var(--c1);font-size:.78rem;font-weight:700">Download →</span>
+            </div>
+          </div>
+        </div>
+        <div class="bcard" onclick="go('guide-glamping')" style="cursor:pointer">
+          <div class="bthumb" style="background:linear-gradient(135deg,#FF4D00,#FFB800)">⛺</div>
+          <div class="bbody">
+            <span class="bcat">Business Blueprint</span>
+            <h3>How to Build an Arch Glamping Cabin: Airbnb Income Blueprint</h3>
+            <p>Build a unique arch cabin, earn passive income on Airbnb, and start your glamping business. Free PDF guide.</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.8rem">
+              <span class="bmeta">Free Download · 14 pages</span>
+              <span style="color:var(--c1);font-size:.78rem;font-weight:700">Download →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="guide-divider"></div>
+
+    <!-- BLOG POSTS -->
+    <div>
+      <h2 class="stitle" style="font-size:1.4rem;margin-bottom:1.5rem">Latest Articles</h2>
     <div class="blog-grid">
       <div class="bcard"><div class="bthumb bt1">📈</div><div class="bbody"><span class="bcat">SEO</span><h3>Why Your Business Isn't Ranking on Google (And How to Fix It)</h3><p>The most common SEO mistakes West Covina businesses make and what to do about them.</p><span class="bmeta">June 2026 · 6 min read</span></div></div>
       <div class="bcard"><div class="bthumb bt2">🗺️</div><div class="bbody"><span class="bcat">Local SEO</span><h3>How to Optimize Your Google Business Profile for West Covina Businesses</h3><p>A complete guide to getting into the Google Map Pack and attracting customers in West Covina.</p><span class="bmeta">May 2026 · 5 min read</span></div></div>
@@ -725,6 +810,7 @@ footer{background:var(--c4);padding:60px 0 28px;flex-shrink:0}
       <div class="bcard"><div class="bthumb bt4">🤖</div><div class="bbody"><span class="bcat">AI & Automation</span><h3>How We Use AI to Deliver Faster Results for Our Clients</h3><p>Behind the scenes of VCM's AI-assisted workflow — from audits to content to reporting.</p><span class="bmeta">April 2026 · 4 min read</span></div></div>
       <div class="bcard"><div class="bthumb bt1">💰</div><div class="bbody"><span class="bcat">Marketing</span><h3>How Much Should a West Covina Business Spend on Digital Marketing?</h3><p>Budget guidance for West Covina small and medium businesses investing in their online presence.</p><span class="bmeta">April 2026 · 5 min read</span></div></div>
       <div class="bcard"><div class="bthumb bt2">📱</div><div class="bbody"><span class="bcat">Social Media</span><h3>Facebook vs. TikTok Ads for West Covina Businesses: Which Wins?</h3><p>Platform data to help West Covina businesses decide where to put their ad budget in 2026.</p><span class="bmeta">March 2026 · 6 min read</span></div></div>
+    </div>
     </div>
   </div></section>
   <footer><div class="wrap"><div class="ftop">
@@ -1834,6 +1920,329 @@ initCookieBanner();
 // init nav style on load
 updateNav('home');
 </script>
+<!-- ═══════════════════════════════
+     GUIDE: AEROPONIC TOWER GARDEN
+═══════════════════════════════ -->
+<div id="guide-aeroponic" class="page">
+  <div class="guide-hero"><div class="guide-hero-glow"></div>
+    <div class="wrap">
+      <span class="eyebrow" style="color:#00C2A8">Business Blueprint · Free Guide</span>
+      <h1 class="pg-title" style="font-size:clamp(2rem,4.5vw,3.5rem)">From Seed to Side Hustle:<br><span>The Aeroponic Tower Garden Blueprint</span></h1>
+      <p class="pg-sub">How to grow 18+ plants vertically in 2 sqm of space and turn your harvest into a real local income stream.</p>
+    </div>
+  </div>
+  <div style="background:var(--c5);padding:0 0 80px">
+  <div class="guide-body">
+    <div class="guide-breadcrumb">
+      <a onclick="go('blog')">Blog</a>
+      <span>›</span>
+      <a onclick="go('blog')">Business Blueprints</a>
+      <span>›</span>
+      <span style="color:var(--text)">Aeroponic Tower Garden</span>
+    </div>
+
+    <!-- Keywords -->
+    <div class="guide-kw-pills">
+      <span class="guide-kw-pill">aeroponic tower garden</span>
+      <span class="guide-kw-pill">vertical farming business</span>
+      <span class="guide-kw-pill">side hustle ideas</span>
+      <span class="guide-kw-pill">urban farming income</span>
+      <span class="guide-kw-pill">grow food at home</span>
+      <span class="guide-kw-pill">small space gardening</span>
+      <span class="guide-kw-pill">farmers market business</span>
+      <span class="guide-kw-pill">passive income ideas</span>
+    </div>
+
+    <!-- Stats -->
+    <div class="guide-stat-row">
+      <div class="guide-stat"><span class="guide-stat-num">18+</span><span class="guide-stat-lbl">Plants per tower</span></div>
+      <div class="guide-stat"><span class="guide-stat-num">2 sqm</span><span class="guide-stat-lbl">Space needed</span></div>
+      <div class="guide-stat"><span class="guide-stat-num">$400/wk</span><span class="guide-stat-lbl">Max harvest value</span></div>
+    </div>
+
+    <!-- Download Box -->
+    <div class="guide-download-box">
+      <div class="guide-download-glow"></div>
+      <h3>📥 Download the Free Guide</h3>
+      <p>15-page PDF blueprint — setup costs, income projections, crop guide, 90-day plan & checklists</p>
+      <a href="Aeroponic_Tower_Garden_Blueprint.pdf" download class="guide-dl-btn">⬇ Download Free PDF</a>
+      <p style="color:rgba(255,255,255,.35);font-size:.72rem;margin-top:1rem;margin-bottom:0">Free · No email required · @vcm.onlineservice</p>
+    </div>
+
+    <h2>What Is an Aeroponic Tower Garden?</h2>
+    <p>Aeroponic towers grow plants with their roots suspended in air, misted continuously with a nutrient-rich water solution. No soil. No digging. No weeding. The results are extraordinary — up to 3× the yield of traditional soil growing in a fraction of the space.</p>
+    <p>One aeroponic tower can hold 18–28 plants in as little as 2 square metres. At peak production, a single tower growing zucchini, herbs, and edible flowers can produce $60–$150+ worth of produce every week.</p>
+
+    <h2>Who Is This Guide For?</h2>
+    <ul>
+      <li><strong>The Home Grower</strong> — fresh food from your own space without a large garden</li>
+      <li><strong>The Side Hustler</strong> — turning a harvest into farmers market income</li>
+      <li><strong>The Micro-Farmer</strong> — scaling to 4–10 towers for consistent local revenue</li>
+    </ul>
+
+    <h2>What's Inside the Blueprint</h2>
+    <ul>
+      <li>Why aeroponics outperforms soil and hydroponics</li>
+      <li>Full tower anatomy — every component explained</li>
+      <li>3 setup scenarios with startup cost estimates ($350–$3,900)</li>
+      <li>Best crops for income: zucchini, herbs, edible flowers</li>
+      <li>Income projections: 1 tower vs 4 towers vs 10 towers</li>
+      <li>Local sales channels — farmers markets, restaurants, community boxes</li>
+      <li>How to use social media content to grow your customer base (faceless)</li>
+      <li>90-day launch plan + tower setup checklist</li>
+    </ul>
+
+    <h2>Income Potential at a Glance</h2>
+    <p>Based on a mixed crop tower (zucchini + herbs + edible flowers), sold through farmers markets and direct local sales:</p>
+    <ul>
+      <li><strong>1 Tower:</strong> $112–$224 net per month</li>
+      <li><strong>4 Towers:</strong> $448–$896 net per month</li>
+      <li><strong>10 Towers:</strong> $1,120–$2,240 net per month</li>
+    </ul>
+    <p>Break-even on a single outdoor tower is typically 3–7 months depending on your local market and crops grown.</p>
+
+    <div class="guide-divider"></div>
+
+    <!-- Marketing CTA -->
+    <div class="guide-cta-box">
+      <h3>🚀 Ready to Turn Your Tower Garden Into a Real Business?</h3>
+      <p>Growing the produce is only half the business. The other half is getting customers to find you — online and locally. At VCM Online Service, we specialize in helping micro-businesses and side hustles like yours build a digital presence that attracts consistent buyers.</p>
+      <p>We can help you with: a professional website for your farm or market stall, local SEO so customers in your area find you on Google, social media content strategy (including faceless video), Google Business Profile setup, and lead generation systems that work while you tend your towers.</p>
+      <a href="#" onclick="go('contact')" style="display:inline-block;background:var(--white);color:var(--c1);font-family:var(--fh);font-weight:700;font-size:.92rem;padding:.85rem 2rem;border-radius:50px;text-decoration:none;transition:all .2s">Get a Free Marketing Consultation →</a>
+    </div>
+
+    <div class="guide-download-box" style="margin-top:0">
+      <div class="guide-download-glow"></div>
+      <h3>📥 Get Your Free Blueprint</h3>
+      <p>Download the complete 15-page guide — everything you need to start your aeroponic tower garden business.</p>
+      <a href="Aeroponic_Tower_Garden_Blueprint.pdf" download class="guide-dl-btn">⬇ Download Free PDF</a>
+    </div>
+
+    <p style="text-align:center;margin-top:1.5rem"><a href="#" onclick="go('blog')" style="color:var(--c1);font-weight:600;font-size:.85rem">← Back to All Guides & Articles</a></p>
+  </div>
+  </div>
+  <footer><div class="wrap"><div class="ftop">
+    <div class="fbrand"><a class="logo" onclick="go('home')">VC<span>M</span></a><p>Smart Marketing. Sustainable Growth.</p></div>
+    <div class="fcol"><h4>Free Guides</h4><ul><li><a onclick="go('guide-aeroponic')">Aeroponic Tower Garden</a></li><li><a onclick="go('guide-concrete')">Concrete Panel Business</a></li><li><a onclick="go('guide-glamping')">Arch Glamping Cabin</a></li></ul></div>
+    <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li><li><a onclick="go('pricing')">Pricing</a></li></ul></div>
+    <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA · <a href="#" onclick="go('privacy')" style="color:rgba(255,255,255,.4);text-decoration:none;font-size:.76rem">Privacy Policy</a></p><div class="socials"><a class="sol" title="Facebook" href="https://www.facebook.com/vcmonlineservice/" target="_blank" rel="noopener">FB</a><a class="sol" title="Instagram" href="https://www.instagram.com/vcm.onlineservice/" target="_blank" rel="noopener">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
+     GUIDE: DECORATIVE CONCRETE
+═══════════════════════════════ -->
+<div id="guide-concrete" class="page">
+  <div class="guide-hero" style="background:#1A1A2E"><div class="guide-hero-glow" style="background:radial-gradient(circle,rgba(255,77,0,.2),transparent 68%)"></div>
+    <div class="wrap">
+      <span class="eyebrow" style="color:#FF7A3D">Business Blueprint · Free Guide</span>
+      <h1 class="pg-title" style="font-size:clamp(2rem,4.5vw,3.5rem)">Start a Decorative Concrete<br><span>Panel Business</span></h1>
+      <p class="pg-sub">From small workshop to paying customers — a complete blueprint with real startup costs and income projections.</p>
+    </div>
+  </div>
+  <div style="background:var(--c5);padding:0 0 80px">
+  <div class="guide-body">
+    <div class="guide-breadcrumb">
+      <a onclick="go('blog')">Blog</a>
+      <span>›</span>
+      <a onclick="go('blog')">Business Blueprints</a>
+      <span>›</span>
+      <span style="color:var(--text)">Decorative Concrete Panel Business</span>
+    </div>
+
+    <div class="guide-kw-pills">
+      <span class="guide-kw-pill">decorative concrete panels</span>
+      <span class="guide-kw-pill">concrete business ideas</span>
+      <span class="guide-kw-pill">side hustle manufacturing</span>
+      <span class="guide-kw-pill">architectural concrete</span>
+      <span class="guide-kw-pill">small workshop business</span>
+      <span class="guide-kw-pill">concrete wall panels</span>
+      <span class="guide-kw-pill">home renovation business</span>
+      <span class="guide-kw-pill">local manufacturing income</span>
+    </div>
+
+    <div class="guide-stat-row">
+      <div class="guide-stat"><span class="guide-stat-num">$2K</span><span class="guide-stat-lbl">Min startup cost</span></div>
+      <div class="guide-stat"><span class="guide-stat-num">4 mo</span><span class="guide-stat-lbl">Break-even (moderate)</span></div>
+      <div class="guide-stat"><span class="guide-stat-num">$3,140</span><span class="guide-stat-lbl">Max monthly net</span></div>
+    </div>
+
+    <div class="guide-download-box">
+      <div class="guide-download-glow"></div>
+      <h3>📥 Download the Free Guide</h3>
+      <p>16-page PDF blueprint — workshop setup, startup costs, income projections, B2B sales system & pricing calculator</p>
+      <a href="Decorative_Concrete_Panel_Business_Guide.pdf" download class="guide-dl-btn">⬇ Download Free PDF</a>
+      <p style="color:rgba(255,255,255,.35);font-size:.72rem;margin-top:1rem;margin-bottom:0">Free · No email required · @vcm.onlineservice</p>
+    </div>
+
+    <h2>The Opportunity Nobody Talks About</h2>
+    <p>Decorative concrete panels are on the walls of restaurants, hotels, office buildings, and high-end homes around the world. Architects specify them. Contractors need them. Homeowners want them. And almost nobody in most local markets is making them.</p>
+    <p>This is a product that looks expensive, commands premium pricing, and can be made from a small workshop with a modest upfront investment. The manufacturing process is learnable. The market is underserved.</p>
+
+    <h2>Who Buys Decorative Concrete Panels</h2>
+    <ul>
+      <li><strong>Interior designers</strong> — specify panels for feature walls in residential and commercial projects</li>
+      <li><strong>Architects</strong> — source cladding for facades, lobbies, and hospitality projects</li>
+      <li><strong>Restaurant & café owners</strong> — feature walls are marketing</li>
+      <li><strong>Homeowners</strong> — renovation market, pay $80–$200+ per sqm for something unique</li>
+      <li><strong>General contractors</strong> — repeat buyers once trust is established</li>
+    </ul>
+
+    <h2>What's Inside the Blueprint</h2>
+    <ul>
+      <li>Why decorative concrete is a booming global market</li>
+      <li>Types of panels and production process outline</li>
+      <li>Workshop setup — space, equipment, full startup cost estimate ($2,000–$6,370)</li>
+      <li>What panels sell for internationally and locally</li>
+      <li>Income projections — conservative to strong ($402–$3,140/month)</li>
+      <li>Two-track sales system — B2C homeowners + B2B contractors</li>
+      <li>How to use social media content to generate inbound leads (faceless)</li>
+      <li>90-day action plan + pricing calculator template</li>
+    </ul>
+
+    <h2>Income Projections</h2>
+    <ul>
+      <li><strong>Conservative (60 panels/month):</strong> $402 net per month</li>
+      <li><strong>Moderate (120 panels/month):</strong> $1,316 net per month</li>
+      <li><strong>Strong (200 panels/month):</strong> $3,140 net per month</li>
+    </ul>
+    <p>Adding one B2B contractor account ordering 100+ panels per month moves you to the strong column fast.</p>
+
+    <div class="guide-divider"></div>
+
+    <div class="guide-cta-box">
+      <h3>🏗️ Built the Workshop. Now Build the Brand.</h3>
+      <p>The best concrete panel business in the world earns nothing without customers finding it. Your production process is already content — the demould reveal, the texture close-ups, the before/after installs — but you need a system to turn that content into consistent leads.</p>
+      <p>VCM Online Service helps concrete panel businesses and workshops build their digital presence from the ground up. We create the website that showcases your work, set up your Google Business Profile so local contractors find you, manage your social media content strategy, and build the online sales funnel that fills your order book.</p>
+      <a href="#" onclick="go('contact')" style="display:inline-block;background:var(--white);color:var(--c1);font-family:var(--fh);font-weight:700;font-size:.92rem;padding:.85rem 2rem;border-radius:50px;text-decoration:none">Get a Free Marketing Strategy Call →</a>
+    </div>
+
+    <div class="guide-download-box" style="margin-top:0">
+      <div class="guide-download-glow"></div>
+      <h3>📥 Get Your Free Blueprint</h3>
+      <p>Download the complete 16-page guide — everything you need to launch your decorative concrete panel business.</p>
+      <a href="Decorative_Concrete_Panel_Business_Guide.pdf" download class="guide-dl-btn">⬇ Download Free PDF</a>
+    </div>
+
+    <p style="text-align:center;margin-top:1.5rem"><a href="#" onclick="go('blog')" style="color:var(--c1);font-weight:600;font-size:.85rem">← Back to All Guides & Articles</a></p>
+  </div>
+  </div>
+  <footer><div class="wrap"><div class="ftop">
+    <div class="fbrand"><a class="logo" onclick="go('home')">VC<span>M</span></a><p>Smart Marketing. Sustainable Growth.</p></div>
+    <div class="fcol"><h4>Free Guides</h4><ul><li><a onclick="go('guide-aeroponic')">Aeroponic Tower Garden</a></li><li><a onclick="go('guide-concrete')">Concrete Panel Business</a></li><li><a onclick="go('guide-glamping')">Arch Glamping Cabin</a></li></ul></div>
+    <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li><li><a onclick="go('pricing')">Pricing</a></li></ul></div>
+    <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA · <a href="#" onclick="go('privacy')" style="color:rgba(255,255,255,.4);text-decoration:none;font-size:.76rem">Privacy Policy</a></p><div class="socials"><a class="sol" title="Facebook" href="https://www.facebook.com/vcmonlineservice/" target="_blank" rel="noopener">FB</a><a class="sol" title="Instagram" href="https://www.instagram.com/vcm.onlineservice/" target="_blank" rel="noopener">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
+     GUIDE: ARCH GLAMPING CABIN
+═══════════════════════════════ -->
+<div id="guide-glamping" class="page">
+  <div class="guide-hero" style="background:linear-gradient(135deg,#0F0F1A,#1A0A00)"><div class="guide-hero-glow" style="background:radial-gradient(circle,rgba(255,184,0,.2),transparent 68%)"></div>
+    <div class="wrap">
+      <span class="eyebrow" style="color:#FFB800">Business Blueprint · Free Guide</span>
+      <h1 class="pg-title" style="font-size:clamp(2rem,4.5vw,3.5rem)">How to Build an<br><span>Arch Glamping Cabin</span></h1>
+      <p class="pg-sub">A concise blueprint for building a unique arch cabin, earning passive income, and starting your glamping business on Airbnb.</p>
+    </div>
+  </div>
+  <div style="background:var(--c5);padding:0 0 80px">
+  <div class="guide-body">
+    <div class="guide-breadcrumb">
+      <a onclick="go('blog')">Blog</a>
+      <span>›</span>
+      <a onclick="go('blog')">Business Blueprints</a>
+      <span>›</span>
+      <span style="color:var(--text)">Arch Glamping Cabin</span>
+    </div>
+
+    <div class="guide-kw-pills">
+      <span class="guide-kw-pill">arch glamping cabin</span>
+      <span class="guide-kw-pill">glamping business ideas</span>
+      <span class="guide-kw-pill">Airbnb passive income</span>
+      <span class="guide-kw-pill">unique Airbnb listing</span>
+      <span class="guide-kw-pill">how to build a cabin</span>
+      <span class="guide-kw-pill">glamping investment</span>
+      <span class="guide-kw-pill">short term rental business</span>
+      <span class="guide-kw-pill">cabin build blueprint</span>
+    </div>
+
+    <div class="guide-stat-row">
+      <div class="guide-stat"><span class="guide-stat-num">$9K</span><span class="guide-stat-lbl">SE Asia build cost</span></div>
+      <div class="guide-stat"><span class="guide-stat-num">8 mo</span><span class="guide-stat-lbl">Airbnb payback</span></div>
+      <div class="guide-stat"><span class="guide-stat-num">$10B</span><span class="guide-stat-lbl">Glamping market by 2033</span></div>
+    </div>
+
+    <div class="guide-download-box" style="background:linear-gradient(135deg,#0F0F1A,#2A1500)">
+      <div class="guide-download-glow"></div>
+      <h3>📥 Download the Free Guide</h3>
+      <p>14-page PDF blueprint — step-by-step build outline, cost estimates, interior styling, Airbnb ROI calculator & 30-day timeline</p>
+      <a href="Arch_Glamping_Cabin_free_Guide.pdf" download class="guide-dl-btn">⬇ Download Free PDF</a>
+      <p style="color:rgba(255,255,255,.35);font-size:.72rem;margin-top:1rem;margin-bottom:0">Free · No email required · @vcm.onlineservice</p>
+    </div>
+
+    <h2>Why the Arch Cabin Is the Best Glamping Investment Right Now</h2>
+    <p>The arch glamping cabin is one of the most photographed, most booked, and most profitable short-term rental structures available today — and it can be built by hand, with local materials, for a fraction of what prefab alternatives cost.</p>
+    <p>A comparable prefab geodesic dome costs $25,000–$80,000 in Western markets before fit-out. A hand-built arch cabin achieves the same visual impact and guest experience for $5,000–$15,000 — often less in Southeast Asia.</p>
+
+    <h2>The Global Glamping Opportunity</h2>
+    <ul>
+      <li>Global market value in 2025: <strong>$3.8 billion USD</strong></li>
+      <li>Projected value by 2033: <strong>$10 billion USD</strong></li>
+      <li>Annual growth rate: <strong>~11% CAGR</strong></li>
+      <li>Primary booking age group: <strong>18–35 (43.9% of bookings)</strong></li>
+      <li>Primary discovery platform: <strong>Instagram + TikTok</strong></li>
+    </ul>
+
+    <h2>What's Inside the Blueprint</h2>
+    <ul>
+      <li>Why arch cabins outperform other glamping structures</li>
+      <li>How to choose the right site (backdrop, privacy, orientation)</li>
+      <li>Build cost ranges by region ($4,000–$80,000 USD)</li>
+      <li>6-phase build outline — foundation to styling</li>
+      <li>How to engineer the viral night shot that fills your calendar</li>
+      <li>Interior styling on a budget — the boho aesthetic rules</li>
+      <li>Airbnb pricing benchmarks by country ($60–$520/night)</li>
+      <li>ROI estimate and payback timeline</li>
+      <li>30-day build timeline + master build checklist</li>
+    </ul>
+
+    <h2>Airbnb ROI — Southeast Asia Example</h2>
+    <ul>
+      <li><strong>Total build + styling cost:</strong> $9,000 USD</li>
+      <li><strong>Average nightly rate:</strong> $80/night</li>
+      <li><strong>Estimated occupancy:</strong> 70% (21 nights/month)</strong></li>
+      <li><strong>Net monthly income:</strong> $1,092/month</li>
+      <li><strong>Estimated payback period:</strong> ~8–9 months</li>
+    </ul>
+
+    <div class="guide-divider"></div>
+
+    <div class="guide-cta-box">
+      <h3>⛺ Your Cabin Is Built. Now Fill Every Night.</h3>
+      <p>A stunning arch cabin with no online presence is a hidden gem nobody can find. The guests who will pay $120–$200 per night for your cabin are searching on Google, scrolling Instagram, and booking through Airbnb — and they need to discover you first.</p>
+      <p>VCM Online Service helps glamping hosts and short-term rental businesses build the digital presence that keeps their calendars full. We create your Airbnb-optimized listing, build a standalone booking website, manage your Instagram content strategy to attract the right guests, set up your Google Business Profile, and run targeted campaigns to drive direct bookings — so you pay less commission and earn more per booking.</p>
+      <a href="#" onclick="go('contact')" style="display:inline-block;background:var(--white);color:var(--c1);font-family:var(--fh);font-weight:700;font-size:.92rem;padding:.85rem 2rem;border-radius:50px;text-decoration:none">Let's Fill Your Glamping Calendar →</a>
+    </div>
+
+    <div class="guide-download-box" style="margin-top:0;background:linear-gradient(135deg,#0F0F1A,#2A1500)">
+      <div class="guide-download-glow"></div>
+      <h3>📥 Get Your Free Blueprint</h3>
+      <p>Download the complete 14-page guide — everything you need to build and launch your arch glamping cabin business.</p>
+      <a href="Arch_Glamping_Cabin_free_Guide.pdf" download class="guide-dl-btn">⬇ Download Free PDF</a>
+    </div>
+
+    <p style="text-align:center;margin-top:1.5rem"><a href="#" onclick="go('blog')" style="color:var(--c1);font-weight:600;font-size:.85rem">← Back to All Guides & Articles</a></p>
+  </div>
+  </div>
+  <footer><div class="wrap"><div class="ftop">
+    <div class="fbrand"><a class="logo" onclick="go('home')">VC<span>M</span></a><p>Smart Marketing. Sustainable Growth.</p></div>
+    <div class="fcol"><h4>Free Guides</h4><ul><li><a onclick="go('guide-aeroponic')">Aeroponic Tower Garden</a></li><li><a onclick="go('guide-concrete')">Concrete Panel Business</a></li><li><a onclick="go('guide-glamping')">Arch Glamping Cabin</a></li></ul></div>
+    <div class="fcol"><h4>Services</h4><ul><li><a onclick="go('services')">Web Development</a></li><li><a onclick="go('services')">SEO</a></li><li><a onclick="go('pricing')">Pricing</a></li></ul></div>
+    <div class="fcol"><h4>Company</h4><ul><li><a onclick="go('about')">About</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+  </div><div class="fbot"><p>© 2026 VCM Online Service · West Covina, CA · <a href="#" onclick="go('privacy')" style="color:rgba(255,255,255,.4);text-decoration:none;font-size:.76rem">Privacy Policy</a></p><div class="socials"><a class="sol" title="Facebook" href="https://www.facebook.com/vcmonlineservice/" target="_blank" rel="noopener">FB</a><a class="sol" title="Instagram" href="https://www.instagram.com/vcm.onlineservice/" target="_blank" rel="noopener">IG</a><a class="sol" title="LinkedIn">LI</a></div></div></div></footer>
+</div>
+
 <!-- ═══════════════════════════════
      PRIVACY POLICY
 ═══════════════════════════════ -->
