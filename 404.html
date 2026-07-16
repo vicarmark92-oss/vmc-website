@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<script>
+  // GitHub Pages clean URL redirect
+  // Redirects /services to /services.html etc.
+  const path = window.location.pathname;
+  const seg = path.replace(/^\//, '').replace(/\/$/, '');
+  
+  // Map of clean URLs to actual files
+  const routes = {
+    '': '/',
+    'services': '/services.html',
+    'pricing': '/pricing.html',
+    'portfolio': '/portfolio.html',
+    'about': '/about.html',
+    'blog': '/blog.html',
+    'tools': '/tools.html',
+    'ai-visibility': '/ai-visibility.html',
+    'contact': '/contact.html',
+    'privacy': '/privacy.html',
+    'guides/aeroponic-tower-garden': '/guides/aeroponic-tower-garden.html',
+    'guides/decorative-concrete-panels': '/guides/decorative-concrete-panels.html',
+    'guides/arch-glamping-cabin': '/guides/arch-glamping-cabin.html',
+  };
+  
+  // Remove repo name prefix if present (for GitHub Pages project sites)
+  const repo = 'vmc-website';
+  const cleanSeg = seg.startsWith(repo + '/') ? seg.slice(repo.length + 1) : seg;
+  
+  if(routes[cleanSeg] !== undefined) {
+    window.location.replace(routes[cleanSeg] === '/' ? '/index.html' : routes[cleanSeg]);
+  }
+</script>
+</head>
+<body>
+<p>Redirecting...</p>
+</body>
+</html>
